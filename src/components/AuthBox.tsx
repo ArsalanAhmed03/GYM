@@ -8,133 +8,118 @@ import { Separator } from "./ui/separator";
 import { motion } from "framer-motion";
 
 export const AuthBox: React.FC = () => {
-  const [isLogin, setIsLogin] = useState(true);
-  const handleToggle = () => setIsLogin(prev => !prev);
-
-  return (
-    <div className="flex h-screen items-center justify-center w-full bg-white overflow-hidden">
-      {/* Form Side */}
-      <motion.div
-        className="flex flex-col w-1/2 h-full items-center justify-center gap-4 relative p-8"
-        animate={{ x: isLogin ? 0 : -"50%" }}
-        transition={{ type: "spring", stiffness: 300, damping: 30 }}
-      >
-        <div className="flex flex-col w-[482px] items-center gap-6">
-          {/* Logo */}
-          <img
-            src="/logo-no-background-1.png"
-            alt="Logo"
-            className="w-[131px] h-[50px] object-cover"
-          />
-
-          <Card className="border-none shadow-none w-full">
-            <CardContent className="p-0 space-y-6">
-              <div className="space-y-2">
-                <h1 className="font-medium text-[32px] font-['Poppins',Helvetica]">
-                  {isLogin ? "Welcome back!" : "Create your account"}
-                </h1>
-                <p className="font-medium text-base font-['Poppins',Helvetica]">
-                  {isLogin
-                    ? "Enter your Credentials to access your account"
-                    : "Fill in the details to sign up"}
-                </p>
-              </div>
-
-              {!isLogin && (
+    const [isLogin, setIsLogin] = useState(true);
+    const handleToggle = () => setIsLogin((prev) => !prev);
+  
+    return (
+      <div className="relative flex h-screen w-full bg-white overflow-hidden">
+        {/* Panels */}
+        <div className="flex w-full h-full">
+          {/* Login Panel */}
+          <div className="w-1/2 flex flex-col items-center justify-center p-8 gap-6">
+            <img
+              src="/logo-no-background-1.png"
+              alt="Logo"
+              className="w-[131px] h-[50px] object-cover"
+            />
+            <Card className="border-none shadow-none w-full max-w-md">
+              <CardContent className="p-0 space-y-6">
                 <div className="space-y-2">
-                  <Label htmlFor="name" className="font-medium text-sm">
-                    Full Name
-                  </Label>
-                  <Input
-                    id="name"
-                    placeholder="Enter your full name"
-                    className="h-8 rounded-[10px] border-[#d9d9d9] text-[10px] font-medium placeholder:text-app-muted"
-                  />
+                  <h1 className="font-medium text-[32px]">Welcome back!</h1>
+                  <p className="text-sm text-gray-600">
+                    Enter your credentials to access your account
+                  </p>
                 </div>
-              )}
-
-              <div className="space-y-2">
-                <Label htmlFor="email" className="font-medium text-sm">
-                  Email address
-                </Label>
-                <Input
-                  id="email"
-                  type="email"
-                  placeholder="Enter your email"
-                  className="h-8 rounded-[10px] border-[#d9d9d9] text-[10px] font-medium placeholder:text-app-muted"
-                />
-              </div>
-
-              <div className="space-y-2">
-                <div className="flex items-center justify-between">
-                  <Label htmlFor="password" className="font-medium text-sm">
-                    Password
-                  </Label>
-                  {isLogin && (
-                    <button
-                      className="font-medium text-[10px] text-red-500"
-                      type="button"
-                    >
+                <div className="space-y-2">
+                  <Label htmlFor="email">Email address</Label>
+                  <Input id="email" type="email" placeholder="Enter your email" />
+                </div>
+                <div className="space-y-2">
+                  <div className="flex items-center justify-between">
+                    <Label htmlFor="password">Password</Label>
+                    <button className="text-xs text-red-500" type="button">
                       Forgot password?
                     </button>
-                  )}
+                  </div>
+                  <Input id="password" type="password" placeholder="••••••••" />
                 </div>
-                <Input
-                  id="password"
-                  type="password"
-                  placeholder="Enter your password"
-                  className="h-8 rounded-[10px] border-[#d9d9d9] text-[10px] font-medium placeholder:text-app-muted"
-                />
-              </div>
-
-              {isLogin && (
-                <div className="flex items-center gap-1.5">
-                  <Checkbox id="remember" className="w-[9px] h-[9.96px]" />
-                  <label htmlFor="remember" className="font-medium text-[9px]">
-                    Remember for 30 days
-                  </label>
+                <div className="flex items-center gap-2">
+                  <Checkbox id="remember" />
+                  <Label htmlFor="remember">Remember for 30 days</Label>
                 </div>
-              )}
-
-              <Button className="w-full h-8 bg-red-500 hover:bg-red-600 rounded-[10px] font-bold text-[13px]">
-                {isLogin ? "Login" : "Sign Up"}
-              </Button>
-
-              <div className="relative flex items-center justify-center">
-                <Separator className="w-[400px] absolute" />
-                <span className="bg-white px-3 z-10 font-medium text-[9px]">
-                  Or
-                </span>
-              </div>
-
-              <div className="flex items-center justify-center">
-                <p className="font-medium text-sm">
-                  {isLogin
-                    ? "Don’t have an account?"
-                    : "Already have an account?"}
-                  &nbsp;
+                <Button className="w-full py-2">Login</Button>
+                <div className="flex items-center justify-center gap-2">
+                  <Separator className="flex-1 h-px" />
+                  <span className="text-xs text-gray-500">Or</span>
+                  <Separator className="flex-1 h-px" />
+                </div>
+                <p className="text-center text-sm">
+                  Don’t have an account?{' '}
                   <button
                     className="text-red-500 underline"
                     type="button"
                     onClick={handleToggle}
                   >
-                    {isLogin ? "Sign Up" : "Login"}
+                    Sign Up
                   </button>
                 </p>
-              </div>
-            </CardContent>
-          </Card>
+              </CardContent>
+            </Card>
+          </div>
+          {/* Signup Panel */}
+          <div className="w-1/2 flex flex-col items-center justify-center p-8 gap-6">
+            <img
+              src="/logo-no-background-1.png"
+              alt="Logo"
+              className="w-[131px] h-[50px] object-cover"
+            />
+            <Card className="border-none shadow-none w-full max-w-md">
+              <CardContent className="p-0 space-y-6">
+                <div className="space-y-2">
+                  <h1 className="font-medium text-[32px]">Create your account</h1>
+                  <p className="text-sm text-gray-600">
+                    Fill in the details to sign up
+                  </p>
+                </div>
+                <div className="space-y-2">
+                  <Label htmlFor="name">Full Name</Label>
+                  <Input id="name" placeholder="Enter your full name" />
+                </div>
+                <div className="space-y-2">
+                  <Label htmlFor="email">Email address</Label>
+                  <Input id="email" type="email" placeholder="Enter your email" />
+                </div>
+                <div className="space-y-2">
+                  <Label htmlFor="password">Password</Label>
+                  <Input id="password" type="password" placeholder="••••••••" />
+                </div>
+                <Button className="w-full py-2">Sign Up</Button>
+                <div className="flex items-center justify-center gap-2">
+                  <Separator className="flex-1 h-px" />
+                  <span className="text-xs text-gray-500">Or</span>
+                  <Separator className="flex-1 h-px" />
+                </div>
+                <p className="text-center text-sm">
+                  Already have an account?{' '}
+                  <button
+                    className="text-red-500 underline"
+                    type="button"
+                    onClick={handleToggle}
+                  >
+                    Login
+                  </button>
+                </p>
+              </CardContent>
+            </Card>
+          </div>
         </div>
-      </motion.div>
-
-      {/* Image Side */}
-      <motion.div
-        className="w-1/2 h-full bg-cover bg-center"
-        style={{ backgroundImage: "url(../frame-65.png)" }}
-        animate={{ x: isLogin ? 0 : -"50%" }}
-        transition={{ type: "spring", stiffness: 300, damping: 30 }}
-      />
-    </div>
+        <motion.div
+          className="absolute top-0 left-1/2 h-full w-1/2 bg-cover bg-center"
+          style={{ backgroundImage: "url(../frame-65.png)" }}
+          animate={{ x: isLogin ? '0%' : '-100%' }}
+          transition={{ type: 'tween', duration: 0.8, ease: 'easeInOut' }}
+        />
+      </div>
   );
 };
 
