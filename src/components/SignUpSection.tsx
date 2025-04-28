@@ -63,7 +63,7 @@ export const SignUpSection = () => {
   };
 
   return (
-    <section className="flex h-[1080px] gap-32 pt-8 pb-16 px-8 self-stretch w-full bg-black flex-col items-center relative">
+    <section className="flex gap-0 pt-8 pb-16 px-8 self-stretch w-full bg-black flex-col items-center relative">
       <div className="flex flex-col gap-8 self-stretch w-full items-center relative">
         <Card className="inline-flex gap-8 p-8 bg-[#00000099] rounded-2xl flex-col items-center border-none">
           <CardContent className="flex w-[263px] items-center justify-center gap-2 p-0">

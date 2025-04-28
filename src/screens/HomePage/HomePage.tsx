@@ -2,7 +2,7 @@ import React from "react";
 import Header from "../../components/Header";
 import HeroSection from "../../components/HeroSection";
 import {SignUpSection} from "../../components/SignUpSection";
-import ExploreBodySection from "../../components/ui/ExploreBodySection";
+import ExploreBodySection from "../../components/ExploreBodySection";
 import Footer from "../../components/Footer";
 
 const HomePage: React.FC = () => (
