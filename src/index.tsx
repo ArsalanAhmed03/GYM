@@ -4,6 +4,8 @@ import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import HomePage from "./screens/HomePage/HomePage";
 import LoginPage from "./screens/LogIn/LogIn";
 import { AuthBox } from "./components/AuthBox";
+import AboutUsPage from "./screens/AboutUs/AboutUsPage";
+import PriceRangePage from "./screens/PricePage/PriceRangePage";
 
 // Protected Route component
 const ProtectedRoute = ({ children }: { children: React.ReactNode }) => {
@@ -23,6 +25,11 @@ root.render(
         <Route path="/" element={<HomePage />} />
         <Route path="/login" element={<LoginPage />} />
         <Route path="/signup" element={<AuthBox />} />
+        <Route path="/about-us" element={<AboutUsPage />} />
+        <Route path="/price-range" element={<PriceRangePage />} />
+
+        
+        {/* Protected Routes */}
         {/* Add more protected routes here */}
         <Route
           path="/dashboard"
