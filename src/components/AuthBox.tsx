@@ -6,10 +6,11 @@ import { Input } from "./ui/input";
 import { Label } from "./ui/label";
 import { Separator } from "./ui/separator";
 import { motion } from "framer-motion";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 
 export const AuthBox: React.FC = () => {
   const navigate = useNavigate();
+  const location = useLocation();
   const [isLogin, setIsLogin] = useState(true);
   const [formData, setFormData] = useState({
     name: "",
@@ -18,6 +19,15 @@ export const AuthBox: React.FC = () => {
   });
   const [error, setError] = useState<string>("");
   const [loading, setLoading] = useState(false);
+
+  // Set isLogin based on path on mount
+  React.useEffect(() => {
+    if (location.pathname === "/signup") {
+      setIsLogin(false);
+    } else if (location.pathname === "/login") {
+      setIsLogin(true);
+    }
+  }, [location.pathname]);
 
   const handleToggle = () => {
     setIsLogin((prev) => !prev);
