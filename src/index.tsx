@@ -6,6 +6,7 @@ import LoginPage from "./screens/LogIn/LogIn";
 import { AuthBox } from "./components/AuthBox";
 import AboutUsPage from "./screens/AboutUs/AboutUsPage";
 import PriceRangePage from "./screens/PricePage/PriceRangePage";
+import StorePage from "./screens/StorePageGym/StorePage";
 
 // Protected Route component
 const ProtectedRoute = ({ children }: { children: React.ReactNode }) => {
@@ -27,7 +28,7 @@ root.render(
         <Route path="/signup" element={<AuthBox />} />
         <Route path="/about-us" element={<AboutUsPage />} />
         <Route path="/price-range" element={<PriceRangePage />} />
-
+        <Route path="/store" element={<StorePage />} />
         
         {/* Protected Routes */}
         {/* Add more protected routes here */}
