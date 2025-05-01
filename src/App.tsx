@@ -11,6 +11,7 @@ import { AuthBox } from "./components/AuthBox";
 import AboutUsPage from "./screens/AboutUs/AboutUsPage";
 import PriceRangePage from "./screens/PricePage/PriceRangePage";
 import StorePage from "./screens/StorePageGym/StorePage";
+import { AuthProvider } from "./context/AuthContext";
 
 // Protected Route component
 const ProtectedRoute: React.FC<{ children: React.ReactNode }> = ({
@@ -25,27 +26,29 @@ const ProtectedRoute: React.FC<{ children: React.ReactNode }> = ({
 
 const App: React.FC = () => {
   return (
-    <Router>
-      <Routes>
-        {/* Main App Routes */}
-        <Route path="/" element={<HomePage />} />
-        <Route path="/login" element={<LoginPage />} />
-        <Route path="/signup" element={<AuthBox />} />
-        <Route path="/about-us" element={<AboutUsPage />} />
-        <Route path="/price-range" element={<PriceRangePage />} />
-        <Route path="/store" element={<StorePage />} />
+    <AuthProvider>
+      <Router>
+        <Routes>
+          {/* Main App Routes */}
+          <Route path="/" element={<HomePage />} />
+          <Route path="/login" element={<LoginPage />} />
+          <Route path="/signup" element={<AuthBox />} />
+          <Route path="/about-us" element={<AboutUsPage />} />
+          <Route path="/price-range" element={<PriceRangePage />} />
+          <Route path="/store" element={<StorePage />} />
 
-        {/* Protected Routes */}
-        <Route
-          path="/dashboard"
-          element={
-            <ProtectedRoute>
-              <div>Dashboard</div>
-            </ProtectedRoute>
-          }
-        />
-      </Routes>
-    </Router>
+          {/* Protected Routes */}
+          <Route
+            path="/dashboard"
+            element={
+              <ProtectedRoute>
+                <div>Dashboard</div>
+              </ProtectedRoute>
+            }
+          />
+        </Routes>
+      </Router>
+    </AuthProvider>
   );
 };
 

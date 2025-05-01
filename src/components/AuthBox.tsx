@@ -47,13 +47,17 @@ export const AuthBox: React.FC = () => {
     try {
       const endpoint = isLogin
         ? "http://localhost:5000/api/auth/login"
-        : "http://localhost:5000/api/auth/signup";
+        : "http://localhost:5000/api/auth/register";
       const response = await fetch(endpoint, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(formData),
+        body: JSON.stringify({
+          username: formData.name,
+          email: formData.email,
+          password: formData.password,
+        }),
       });
 
       if (!response.ok) {
