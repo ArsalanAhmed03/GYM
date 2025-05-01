@@ -36,7 +36,7 @@ const ExploreBodySection: React.FC = () => {
           <div
             key={i}
             className="h-screen w-full bg-cover bg-center"
-            style={{ backgroundImage: `url('../frame-19-LS.jpg')` }}
+            style={{ backgroundImage: `url('../bg2-LS.jpg')` }}
           />
         ))}
       </div>

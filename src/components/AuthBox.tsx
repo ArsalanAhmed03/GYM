@@ -240,7 +240,7 @@ export const AuthBox: React.FC = () => {
       </div>
       <motion.div
         className="absolute top-0 left-1/2 h-full w-1/2 bg-cover bg-center"
-        style={{ backgroundImage: "url(../frame-65.png)" }}
+        style={{ backgroundImage: "url(../bg2.png)" }}
         animate={{ x: isLogin ? "0%" : "-100%" }}
         transition={{ type: "tween", duration: 0.8, ease: "easeInOut" }}
       />

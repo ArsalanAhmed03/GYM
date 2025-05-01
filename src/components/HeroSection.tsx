@@ -12,7 +12,7 @@ const HeroSection: React.FC = () => {
         h-[calc(100vh)]
         flex flex-col justify-between
         pt-[73px] pb-8 px-8
-        bg-[url('../frame-19-LS.jpg')]
+        bg-[url('../bg2-LS.jpg')]
         bg-[position:50%_20%]
         bg-cover
       "
