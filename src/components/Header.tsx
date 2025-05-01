@@ -3,12 +3,12 @@ import { useNavigate } from "react-router-dom";
 import { Button } from "./ui/button";
 
 const navItems = [
-  "Home",
-  "About",
-  "Services",
-  "Membership",
-  "Diet Plans",
-  "Contact",
+  { name: "Home", path: "/" },
+  { name: "About", path: "/about-us" },
+  { name: "Services", path: "/services" },
+  { name: "Membership", path: "/price-range" },
+  { name: "Diet Plans", path: "/diet-plans" },
+  { name: "Contact", path: "/contact" },
 ];
 
 const Header: React.FC = () => {
@@ -46,9 +46,10 @@ const Header: React.FC = () => {
           {navItems.map((item, index) => (
             <span
               key={index}
+              onClick={() => navigate(item.path)}
               className="text-white text-lg font-semibold cursor-pointer hover:underline"
             >
-              {item}
+              {item.name}
             </span>
           ))}
         </div>
