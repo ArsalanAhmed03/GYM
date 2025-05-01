@@ -1,8 +1,16 @@
-import React from "react";
+import React, { useState } from "react";
 import { StorePage1 } from "../../components/StorePage1";
 import { StorePage2 } from "../../components/StorePage2";
+import { useAuth } from "../../context/AuthContext";
 
 export const StorePageGym = (): JSX.Element => {
+  const [cartUpdateTrigger, setCartUpdateTrigger] = useState(0);
+  const { token } = useAuth();
+
+  const handleCartUpdate = () => {
+    setCartUpdateTrigger((prev) => prev + 1);
+  };
+
   return (
     <div
       className="flex flex-col items-center gap-4 px-20 py-0 relative [background:url(..//bg1.png)_50%_50%_/_cover] min-h-screen"
@@ -19,8 +27,8 @@ export const StorePageGym = (): JSX.Element => {
             </h1>
           </div>
 
-          <StorePage1 />
-          <StorePage2 />
+          <StorePage1 onCartUpdate={handleCartUpdate} />
+          <StorePage2 key={cartUpdateTrigger} />
         </div>
       </div>
     </div>
