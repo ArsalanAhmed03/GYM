@@ -29,12 +29,12 @@ export const StorePage1 = ({ onCartUpdate }: StorePage1Props): JSX.Element => {
     const fetchProducts = async () => {
       try {
         setLoading(true);
+        setError(null);
         const data = await getProductsByCategory(selectedCategory);
         setProducts(data || []);
-        setError(null);
       } catch (err) {
+        console.error("Error fetching products:", err);
         setError("Failed to load products. Please try again later.");
-        console.error(err);
         setProducts([]);
       } finally {
         setLoading(false);
@@ -45,7 +45,7 @@ export const StorePage1 = ({ onCartUpdate }: StorePage1Props): JSX.Element => {
   }, [selectedCategory]);
 
   const handleLoginSuccess = () => {
-    onCartUpdate(); // Update cart after successful login
+    onCartUpdate();
   };
 
   const handleQuickBuy = async (productId: string) => {
@@ -137,8 +137,41 @@ export const StorePage1 = ({ onCartUpdate }: StorePage1Props): JSX.Element => {
 
   if (error) {
     return (
-      <div className="flex items-center justify-center h-64">
-        <p className="text-red-500">{error}</p>
+      <div className="flex w-full gap-8">
+        <div className="w-64 flex-shrink-0">
+          <h2 className="font-semibold text-white text-2xl leading-8 [font-family:'Roboto',Helvetica] mb-4">
+            Categories
+          </h2>
+          <nav className="w-full">
+            <ul className="space-y-2">
+              {categories.map((category) => (
+                <li key={category}>
+                  <Button
+                    variant="ghost"
+                    className={`w-full justify-start rounded h-10 px-0 ${
+                      category === selectedCategory
+                        ? "text-[#ff4b2b] font-bold"
+                        : "text-[#ffffffb2] font-normal"
+                    }`}
+                    onClick={() => setSelectedCategory(category)}
+                  >
+                    <span className="ml-[31px] [font-family:'Roboto',Helvetica] text-base leading-6">
+                      {category}
+                    </span>
+                  </Button>
+                </li>
+              ))}
+            </ul>
+          </nav>
+        </div>
+        <div className="flex-1">
+          <h2 className="font-semibold text-white text-2xl leading-8 [font-family:'Roboto',Helvetica] mb-4">
+            Products
+          </h2>
+          <div className="flex items-center justify-center h-64 bg-gray-800 rounded-lg">
+            <p className="text-red-500 text-lg">{error}</p>
+          </div>
+        </div>
       </div>
     );
   }
@@ -195,44 +228,49 @@ export const StorePage1 = ({ onCartUpdate }: StorePage1Props): JSX.Element => {
               transition={{ duration: 0.3 }}
               className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
             >
-              {products.map((product) => (
-                <motion.div
-                  key={product._id}
-                  initial={{ opacity: 0, scale: 0.9 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  transition={{ duration: 0.3 }}
-                >
-                  <Card className="bg-gray-800 rounded-lg overflow-hidden shadow-[0px_10px_15px_-3px_#0000001a,0px_4px_6px_-4px_#0000001a] border-0">
-                    <CardContent className="p-4 space-y-3">
-                      <img
-                        className="w-full h-40 object-cover"
-                        alt={`${product.name} image`}
-                        src={product.image || "/placeholder-image.jpg"}
-                      />
-                      <div>
-                        <h3 className="font-bold text-white text-lg leading-7 [font-family:'Roboto',Helvetica]">
-                          {product.name}
-                        </h3>
-                        <p className="font-normal text-white text-base leading-6 [font-family:'Roboto',Helvetica]">
-                          ${product.price.toFixed(2)}
-                        </p>
-                        {/* {product.stock <= 0 && (
-                          <p className="text-red-500 text-sm">Out of Stock</p>
-                        )} */}
-                      </div>
-                    </CardContent>
-                    <CardFooter className="p-4 pt-0">
-                      <Button
-                        className="w-full bg-red-500 hover:bg-red-600 text-white font-normal text-base [font-family:'Roboto',Helvetica]"
-                        onClick={() => handleQuickBuy(product._id)}
-                        disabled={product.stock <= 0}
-                      >
-                        {product.stock <= 0 ? "Out of Stock" : "Quick Buy"}
-                      </Button>
-                    </CardFooter>
-                  </Card>
-                </motion.div>
-              ))}
+              {products.length === 0 ? (
+                <div className="col-span-full flex items-center justify-center h-64 bg-gray-800 rounded-lg">
+                  <p className="text-white text-lg">
+                    No products found in this category
+                  </p>
+                </div>
+              ) : (
+                products.map((product) => (
+                  <motion.div
+                    key={product._id}
+                    initial={{ opacity: 0, scale: 0.9 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    transition={{ duration: 0.3 }}
+                  >
+                    <Card className="bg-gray-800 rounded-lg overflow-hidden shadow-[0px_10px_15px_-3px_#0000001a,0px_4px_6px_-4px_#0000001a] border-0">
+                      <CardContent className="p-4 space-y-3">
+                        <img
+                          className="w-full h-40 object-cover"
+                          alt={`${product.name} image`}
+                          src={product.image || "/placeholder-image.jpg"}
+                        />
+                        <div>
+                          <h3 className="font-bold text-white text-lg leading-7 [font-family:'Roboto',Helvetica]">
+                            {product.name}
+                          </h3>
+                          <p className="font-normal text-white text-base leading-6 [font-family:'Roboto',Helvetica]">
+                            ${product.price.toFixed(2)}
+                          </p>
+                        </div>
+                      </CardContent>
+                      <CardFooter className="p-4 pt-0">
+                        <Button
+                          className="w-full bg-red-500 hover:bg-red-600 text-white font-normal text-base [font-family:'Roboto',Helvetica]"
+                          onClick={() => handleQuickBuy(product._id)}
+                          disabled={product.stock <= 0}
+                        >
+                          {product.stock <= 0 ? "Out of Stock" : "Quick Buy"}
+                        </Button>
+                      </CardFooter>
+                    </Card>
+                  </motion.div>
+                ))
+              )}
             </motion.div>
           </AnimatePresence>
         </div>
