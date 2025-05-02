@@ -1,0 +1,1 @@
+export { GymEquipment } from "./GymEquipment";
