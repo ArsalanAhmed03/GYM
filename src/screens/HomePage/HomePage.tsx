@@ -14,7 +14,7 @@ const HomePage: React.FC = () => {
   }, []);
 
   return (
-    <main className="relative w-full overflow-x-hidden bg-black">
+    <main className="w-full overflow-x-hidden bg-black">
       <Header />
       <HeroSection />
       {!isLoggedIn && <SignUpSection />}

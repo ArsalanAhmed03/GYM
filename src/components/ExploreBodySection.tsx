@@ -11,6 +11,7 @@ const ExploreBodySection: React.FC = () => {
   const sectionRef = useRef<HTMLDivElement>(null);
   const [activeIndex, setActiveIndex] = useState(0);
 
+  // update activeIndex based on scroll position
   useEffect(() => {
     const handleScroll = () => {
       if (!sectionRef.current) return;
@@ -28,7 +29,7 @@ const ExploreBodySection: React.FC = () => {
   return (
     <section
       ref={sectionRef}
-      className="relative w-full h-[400vh] overflow-hidden"
+      className="relative w-full h-[400vh] overflow-x-hidden"
     >
       {/* Background slides */}
       <div className="absolute inset-0 z-0 h-[400vh]">
@@ -41,15 +42,17 @@ const ExploreBodySection: React.FC = () => {
         ))}
       </div>
 
-      {/* Sticky Overlay Text at top of section */}
-      <div className="sticky top-0 z-20 w-full flex flex-col justify-center items-center h-screen text-white bg-black/30 backdrop-blur-sm pointer-events-none">
+      {/* Sticky Overlay – sticks while the section is in view */}
+      <div className="sticky top-0 z-20 w-full h-screen flex flex-col justify-center items-center text-white bg-black/30 backdrop-blur-sm pointer-events-none">
         <div className="pointer-events-auto text-center">
           <h2 className="text-4xl font-bold mb-6">EXPLORE YOUR BODY</h2>
           {features.map((text, i) => (
             <p
               key={i}
               className={`transition-transform duration-300 font-semibold my-2 ${
-                activeIndex === i ? "scale-125 text-4xl" : "scale-100 text-3xl"
+                activeIndex === i
+                  ? "scale-125 text-4xl"
+                  : "scale-100 text-3xl"
               }`}
             >
               {text}
