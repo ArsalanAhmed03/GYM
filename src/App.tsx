@@ -11,6 +11,9 @@ import { AuthBox } from "./components/AuthBox";
 import AboutUsPage from "./screens/AboutUs/AboutUsPage";
 import PriceRangePage from "./screens/PricePage/PriceRangePage";
 import StorePage from "./screens/StorePageGym/StorePage";
+import FaqsPage from "./screens/FaqsPage/FaqsPage";
+import WorkoutProgram from "./screens/WorkOutPage/WorkOutPage";
+import GymEquipmentPage from "./screens/GymEquipment/GymEquipmentPage";
 import { AuthProvider } from "./context/AuthContext";
 
 // Protected Route component
@@ -36,6 +39,9 @@ const App: React.FC = () => {
           <Route path="/about-us" element={<AboutUsPage />} />
           <Route path="/price-range" element={<PriceRangePage />} />
           <Route path="/store" element={<StorePage />} />
+          <Route path="/Faq" element={<FaqsPage />} />
+          <Route path="/Equipment" element={<GymEquipmentPage />} />
+          <Route path="/WP" element={<WorkoutProgram />} />
 
           {/* Protected Routes */}
           <Route

@@ -1,1 +1,0 @@
-export { FrameWrapperByAnima } from "./FrameWrapperByAnima";

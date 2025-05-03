@@ -16,11 +16,11 @@ const faqItems = [
   { question: "How can I track my order?", answer: "" },
 ];
 
-export const FaqsPage = (): JSX.Element => {
+export const Faqs = (): JSX.Element => {
   return (
     <div
       className="flex flex-col min-h-[868px] items-center gap-4 px-20 py-0 bg-cover bg-center bg-no-repeat"
-      style={{ backgroundImage: "url(..//faqs-page.png)" }}
+      style={{ backgroundImage: "url(..//bg1.png)" }}
     >
       <Card className="flex flex-col items-start gap-2 p-8 w-full bg-[#00000080] border-0">
         <CardContent className="p-0 w-full space-y-2">

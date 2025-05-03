@@ -1,7 +1,7 @@
 import React from "react";
-import { Card, CardContent } from "../../../../components/ui/card";
+import { Card, CardContent } from "./ui/card";
 
-export const FrameWrapperByAnima = (): JSX.Element => {
+export const WP2 = (): JSX.Element => {
   // Define workout program data for mapping
   const workoutPrograms = [
     {
@@ -51,7 +51,7 @@ export const FrameWrapperByAnima = (): JSX.Element => {
   ];
 
   return (
-    <section className="flex flex-col items-center justify-center px-20 py-10 w-full [background:url(..//frame.png)_50%_50%_/_cover]">
+    <section className="flex flex-col items-center justify-center px-20 py-10 w-full [background:url(..//bg4.png)_50%_50%_/_cover]">
       <header className="flex items-center justify-center gap-2 w-full">
         <h2 className="font-bold text-white text-3xl text-center leading-9 font-['Roboto',Helvetica]">
           Workout Plans

@@ -3,6 +3,8 @@ import Header from "../../components/Header";
 import HeroSection from "../../components/HeroSection";
 import { SignUpSection } from "../../components/SignUpSection";
 import ExploreBodySection from "../../components/ExploreBodySection";
+import {ExpertTrainer} from "../../components/ExpertTrainerSection";
+
 import Footer from "../../components/Footer";
 
 const HomePage: React.FC = () => {
@@ -18,6 +20,7 @@ const HomePage: React.FC = () => {
       <Header />
       <HeroSection />
       {!isLoggedIn && <SignUpSection />}
+      <ExpertTrainer />
       <ExploreBodySection />
       <Footer />
     </main>

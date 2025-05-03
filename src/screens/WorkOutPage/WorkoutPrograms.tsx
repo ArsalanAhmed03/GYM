@@ -1,7 +1,7 @@
 import React from "react";
-import { DivWrapperByAnima } from "./sections/DivWrapperByAnima";
-import { FrameByAnima } from "./sections/FrameByAnima";
-import { FrameWrapperByAnima } from "./sections/FrameWrapperByAnima";
+import { WP1 } from "../../components/WP1";
+import { WP2 } from "../../components/WP2";
+import { WP3 } from "../../components/WP3";
 
 export const WorkoutPrograms = (): JSX.Element => {
   return (
@@ -11,9 +11,9 @@ export const WorkoutPrograms = (): JSX.Element => {
       data-model-id="91:761"
     >
       <div className="flex flex-col items-center gap-[34px] relative self-stretch w-full">
-        <FrameByAnima />
-        <FrameWrapperByAnima />
-        <DivWrapperByAnima />
+        <WP1 />
+        <WP2 />
+        <WP3 />
       </div>
     </main>
   );

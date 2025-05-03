@@ -1,27 +1,27 @@
 import React from "react";
 
-export const FrameByAnima = (): JSX.Element => {
+export const WP1 = (): JSX.Element => {
   // Define workout categories data for mapping
   const workoutCategories = [
     {
       id: 1,
       name: "Weight Loss",
-      icon: "/frame-1.svg",
+      icon: "/weight.svg",
     },
     {
       id: 2,
       name: "Strength Training",
-      icon: "/frame-3.svg",
+      icon: "/dumbbell.svg",
     },
     {
       id: 3,
       name: "Muscle Gain",
-      icon: "/frame-4.svg",
+      icon: "/balance.svg",
     },
     {
       id: 4,
       name: "Cardio",
-      icon: "/frame-5.svg",
+      icon: "/running.svg",
     },
   ];
 

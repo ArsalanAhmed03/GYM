@@ -1,26 +1,26 @@
 import React from "react";
-import { Card, CardContent } from "../../../../components/ui/card";
+import { Card, CardContent } from "./ui/card";
 
-export const DivWrapperByAnima = (): JSX.Element => {
+export const WP3 = (): JSX.Element => {
   // Data for trainers to enable mapping
   const trainers = [
     {
       id: 1,
       name: "John Doe",
       specialty: "Strength Training",
-      image: "/frame-2.svg",
+      image: "/whiteCircle.svg",
     },
     {
       id: 2,
       name: "Jane Smith",
       specialty: "Weight Loss",
-      image: "/frame-2.svg",
+      image: "/whiteCircle.svg",
     },
     {
       id: 3,
       name: "Emily Johnson",
       specialty: "Cardio Fitness",
-      image: "/frame-2.svg",
+      image: "/whiteCircle.svg",
     },
   ];
 

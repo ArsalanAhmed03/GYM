@@ -1,1 +1,0 @@
-export { GymEquipment } from "./GymEquipment";
