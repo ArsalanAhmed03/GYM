@@ -10,7 +10,7 @@ export const AboutUs3 = (): JSX.Element => {
       specialty: "Strength Training Specialist",
       description:
         "With over 5 years of experience, Trainer 1 focuses on building strength and endurance through personalized training programs.",
-      imageSrc: "/frame-5.svg",
+      imageSrc: "/whiteBox.svg",
     },
     {
       id: 2,
@@ -18,7 +18,7 @@ export const AboutUs3 = (): JSX.Element => {
       specialty: "Yoga & Flexibility Coach",
       description:
         "Trainer 2 brings a holistic approach to fitness, helping clients improve flexibility and mindfulness through yoga practices.",
-      imageSrc: "/frame-5.svg",
+      imageSrc: "/whiteBox.svg",
     },
     {
       id: 3,
@@ -26,7 +26,7 @@ export const AboutUs3 = (): JSX.Element => {
       specialty: "Nutrition & Wellness Advisor",
       description:
         "With a background in nutrition, Trainer 3 guides clients on their journey to a healthier lifestyle through balanced eating and wellness strategies.",
-      imageSrc: "/frame-5.svg",
+      imageSrc: "/whiteBox.svg",
     },
     {
       id: 4,
@@ -34,7 +34,7 @@ export const AboutUs3 = (): JSX.Element => {
       specialty: "Cardio & Endurance Specialist",
       description:
         "Trainer 4 specializes in high-intensity cardio workouts designed to boost endurance and cardiovascular health.",
-      imageSrc: "/frame-5.svg",
+      imageSrc: "/whiteBox.svg",
     },
     {
       id: 5,
@@ -42,7 +42,7 @@ export const AboutUs3 = (): JSX.Element => {
       specialty: "Group Fitness Instructor",
       description:
         "With a passion for community, Trainer 5 leads engaging group classes that motivate and inspire participants.",
-      imageSrc: "/frame-5.svg",
+      imageSrc: "/whiteBox.svg",
     },
     {
       id: 6,
@@ -50,7 +50,7 @@ export const AboutUs3 = (): JSX.Element => {
       specialty: "Rehabilitation & Recovery Specialist",
       description:
         "Trainer 6 focuses on helping clients recover from injuries and regain strength through tailored rehabilitation programs.",
-      imageSrc: "/frame-5.svg",
+      imageSrc: "/whiteBox.svg",
     },
   ];
 

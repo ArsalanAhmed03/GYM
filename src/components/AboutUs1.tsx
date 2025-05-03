@@ -11,15 +11,15 @@ interface PointData {
 const visionPoints: PointData[] = [
   {
     text: "To be a leading community hub for fitness and wellness.",
-    iconSrc: "/frame-11.svg",
+    iconSrc: "/target.svg",
   },
   {
     text: "To foster a supportive environment for all fitness levels.",
-    iconSrc: "/frame-20.svg",
+    iconSrc: "/group.svg",
   },
   {
     text: "To inspire lifelong journeys of health and fitness.",
-    iconSrc: "/frame-16.svg",
+    iconSrc: "/redFlag.svg",
   },
 ];
 
@@ -27,15 +27,15 @@ const visionPoints: PointData[] = [
 const missionPoints: PointData[] = [
   {
     text: "To provide state-of-the-art facilities and equipment.",
-    iconSrc: "/frame-9.svg",
+    iconSrc: "/dumbbell.svg",
   },
   {
     text: "To offer diverse programs that cater to individual needs.",
-    iconSrc: "/frame-18.svg",
+    iconSrc: "/calender.svg",
   },
   {
     text: "To promote a culture of health, wellness, and community.",
-    iconSrc: "/frame-17.svg",
+    iconSrc: "/heart.svg",
   },
 ];
 

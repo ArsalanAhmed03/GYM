@@ -26,9 +26,9 @@ const Footer: React.FC = () => (
           </div>
         </div>
         <div className="flex items-center gap-6">
-          <img src="/frame-3.svg" alt="Instagram" className="w-4 h-4" />
-          <img src="/frame-2.svg" alt="Facebook" className="w-4 h-4" />
-          <img src="/frame-1.svg" alt="Twitter" className="w-4 h-4" />
+          <img src="/FB.svg" alt="Instagram" className="w-4 h-4" />
+          <img src="/Instagram.svg" alt="Facebook" className="w-4 h-4" />
+          <img src="/twitter.svg" alt="Twitter" className="w-4 h-4" />
         </div>
       </div>
       <div className="flex justify-center items-center flex-wrap gap-8 text-sm text-gray-400">

@@ -4,7 +4,7 @@ import { Card, CardContent} from "./ui/card";
 export const AboutUs2 = (): JSX.Element => {
   return (
     <Card className="border-none flex flex-col items-center self-stretch w-full bg-[#0e0505] rounded-lg overflow-hidden shadow-[0px_10px_15px_-3px_#0000001a,0px_4px_6px_-4px_#0000001a]">
-      <div className="relative w-full h-[456px] [background:url(..//frame.png)_50%_50%_/_cover] opacity-30" />
+      <div className="relative w-full h-[456px] [background:url(..//bg3.png)_50%_50%_/_cover] opacity-30" />
 
       <CardContent className="border-none flex flex-col items-start gap-4 px-9 py-8 w-full">
         <div className="flex items-center gap-2">
