@@ -1,14 +1,14 @@
 import React from "react";
 import Header from "../../components/Header";
 import Footer from "../../components/Footer";
-import { Faqs } from "./Faqs";
+import { ContactUs } from "./ContactUs";
 
-const FaqsPage: React.FC = () => (
+const ContactUsPage: React.FC = () => (
   <main className="relative w-full overflow-x-hidden bg-black">
     <Header />
-    <Faqs />
+    <ContactUs />
     <Footer />
   </main>
 );
 
-export default FaqsPage;
+export default ContactUsPage;

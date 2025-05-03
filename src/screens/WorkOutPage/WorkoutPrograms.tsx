@@ -1,4 +1,3 @@
-import React from "react";
 import { WP1 } from "../../components/WP1";
 import { WP2 } from "../../components/WP2";
 import { WP3 } from "../../components/WP3";

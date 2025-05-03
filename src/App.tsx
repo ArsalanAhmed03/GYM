@@ -11,10 +11,13 @@ import { AuthBox } from "./components/AuthBox";
 import AboutUsPage from "./screens/AboutUs/AboutUsPage";
 import PriceRangePage from "./screens/PricePage/PriceRangePage";
 import StorePage from "./screens/StorePageGym/StorePage";
-import FaqsPage from "./screens/FaqsPage/FaqsPage";
+import FAQPage from "./screens/FaqsPage/FAQPage";
 import WorkoutProgram from "./screens/WorkOutPage/WorkOutPage";
 import GymEquipmentPage from "./screens/GymEquipment/GymEquipmentPage";
 import { AuthProvider } from "./context/AuthContext";
+import ContactUsPage from "./screens/ContactUs/ContactUsPage";
+import DietPage from "./screens/Diet/DietPage";
+import EventsPage from "./screens/Events/EventsPage";
 
 // Protected Route component
 const ProtectedRoute: React.FC<{ children: React.ReactNode }> = ({
@@ -39,9 +42,14 @@ const App: React.FC = () => {
           <Route path="/about-us" element={<AboutUsPage />} />
           <Route path="/price-range" element={<PriceRangePage />} />
           <Route path="/store" element={<StorePage />} />
-          <Route path="/Faq" element={<FaqsPage />} />
+          <Route path="/Faq" element={<FAQPage />} />
           <Route path="/Equipment" element={<GymEquipmentPage />} />
           <Route path="/WP" element={<WorkoutProgram />} />
+          <Route path="/Contact" element={<ContactUsPage />} />
+          <Route path="/Diet" element={<DietPage />} />
+          <Route path="/Events" element={<EventsPage />} />
+
+
 
           {/* Protected Routes */}
           <Route
