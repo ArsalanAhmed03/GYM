@@ -10,6 +10,7 @@ import {
   updateQuantity,
   CartItem,
 } from "../services/cartService";
+import { getProducts, Product } from "../services/productService";
 import { LoginModal } from "./LoginModal";
 
 export const StorePage2 = (): JSX.Element => {
@@ -22,7 +23,18 @@ export const StorePage2 = (): JSX.Element => {
     if (!token) {
       // Get cart from local storage for logged-out users
       const localCart = JSON.parse(localStorage.getItem("cart") || "[]");
-      setCartItems(localCart);
+      // Fetch all products
+      const products: Product[] = await getProducts();
+      // Map local cart items to full product objects
+      const mappedCart = localCart
+        .map((item: any) => {
+          const product = products.find((p) => p._id === item.productId);
+          return product
+            ? { productId: product, quantity: item.quantity }
+            : null;
+        })
+        .filter(Boolean);
+      setCartItems(mappedCart);
       setLoading(false);
       return;
     }
@@ -105,10 +117,10 @@ export const StorePage2 = (): JSX.Element => {
   };
 
   const calculateTotal = () => {
-    return cartItems.reduce(
-      (total, item) => total + item.productId.price * item.quantity,
-      0
-    );
+    return cartItems.reduce((total, item) => {
+      const price = item.productId?.price || 0;
+      return total + price * item.quantity;
+    }, 0);
   };
 
   if (loading) {
