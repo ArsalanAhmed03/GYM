@@ -4,6 +4,7 @@ import HeroSection from "../../components/HeroSection";
 import { SignUpSection } from "../../components/SignUpSection";
 import ExploreBodySection from "../../components/ExploreBodySection";
 import {ExpertTrainer} from "../../components/ExpertTrainerSection";
+import {AboutUs4} from "../../components/AboutUs4";
 
 import Footer from "../../components/Footer";
 
@@ -22,6 +23,7 @@ const HomePage: React.FC = () => {
       {!isLoggedIn && <SignUpSection />}
       <ExpertTrainer />
       <ExploreBodySection />
+      <AboutUs4 />
       <Footer />
     </main>
   );

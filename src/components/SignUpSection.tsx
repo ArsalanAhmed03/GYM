@@ -94,7 +94,7 @@ export const SignUpSection = () => {
       viewport={{ once: true, amount: 0.3 }}
     >
       <motion.div variants={childVariants} className="w-full max-w-[1276px]">
-        <Card className="flex flex-col items-center gap-8 p-8 bg-[#00000099] rounded-2xl border-none">
+        <Card className="flex flex-col items-center gap-8 p-0 bg-[#00000099] rounded-2xl border-none">
           <CardContent className="flex w-[263px] items-center justify-center gap-2 p-0">
             <p className="relative w-fit mt-[-1.00px] ml-[-28.50px] mr-[-28.50px] [font-family:'Roboto',Helvetica] font-bold text-white text-[32px] leading-10">
               SIGN UP FOR ACCESS
@@ -118,7 +118,7 @@ export const SignUpSection = () => {
           {["firstName", "lastName"].map((field) => (
             <Card
               key={field}
-              className="flex-1 flex-col gap-4 p-8 bg-[#00000099] rounded-2xl border-none"
+              className="flex-1 flex-col gap-4 p-0 bg-[#00000099] rounded-2xl border-none"
             >
               <CardContent className="p-0">
                 <label className="text-white text-[length:var(--m3-headline-small-font-size)]">
@@ -141,7 +141,7 @@ export const SignUpSection = () => {
           {["email", "phone"].map((field) => (
             <Card
               key={field}
-              className="flex-1 flex-col gap-4 p-8 bg-[#00000099] rounded-2xl border-none"
+              className="flex-1 flex-col gap-4 p-0 bg-[#00000099] rounded-2xl border-none"
             >
               <CardContent className="p-0">
                 <label className="text-white text-[length:var(--m3-headline-small-font-size)]">
@@ -162,7 +162,7 @@ export const SignUpSection = () => {
 
         {/* Terms Checkbox */}
         <motion.div
-          className="flex items-center gap-2 px-8"
+          className="flex items-center gap-2 px-0"
           variants={childVariants}
         >
           <Checkbox
@@ -178,7 +178,7 @@ export const SignUpSection = () => {
             className="w-[23px] h-[23px] rounded-sm border-white"
           />
           <label htmlFor="terms" className="text-white">
-            By submitting this form, you accept the Terms &amp; Conditions
+            By submitting this form, you accept the Terms & Conditions
           </label>
         </motion.div>
 
@@ -187,15 +187,27 @@ export const SignUpSection = () => {
           className="flex justify-center gap-4"
           variants={childVariants}
         >
-          <Button type="submit" className="w-56 py-5 bg-white text-black">
-            SIGN UP
+          {/* SIGN UP */}
+          <Button
+            type="submit"
+            className="relative group w-56 py-5 overflow-hidden bg-transparent border border-white text-white rounded"
+          >
+            {/* fill overlay */}
+            <div className="absolute inset-0 bg-white w-0 group-hover:w-full transition-all duration-300 ease-in-out" />
+            {/* label */}
+            <span className="relative z-10 group-hover:text-black">SIGNUP</span>
           </Button>
+
+          {/* LOGIN */}
           <Button
             type="button"
             onClick={() => navigate("/login")}
-            className="w-56 py-5 bg-transparent border border-white text-white"
+            className="relative group w-56 py-5 overflow-hidden bg-transparent border border-white text-white rounded"
           >
-            LOGIN
+            {/* fill overlay */}
+            <div className="absolute inset-0 bg-white w-0 group-hover:w-full transition-all duration-300 ease-in-out" />
+            {/* label */}
+            <span className="relative z-10 group-hover:text-black">LOGIN</span>
           </Button>
         </motion.div>
       </motion.form>
