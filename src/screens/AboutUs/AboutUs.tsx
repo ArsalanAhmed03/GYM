@@ -1,7 +1,7 @@
 import { AboutUs4 } from "../../components/AboutUs4";
-import { AboutUs3 } from "../../components/AboutUs3";
 import { AboutUs2 } from "../../components/AboutUs2";
 import { AboutUs1 } from "../../components/AboutUs1";
+import { ExpertTrainer } from "../../components/ExpertTrainerSection";
 
 export const AboutUs = (): JSX.Element => {
   return (
@@ -18,16 +18,15 @@ export const AboutUs = (): JSX.Element => {
       </header>
 
       <section className="w-full">
+        <AboutUs1 />
+      </section>
+      
+      <section className="w-full">
         <AboutUs2 />
       </section>
 
       <section className="w-full">
-        <AboutUs1 />
-      </section>
-
-
-      <section className="w-full">
-        <AboutUs3 />
+        <ExpertTrainer />
       </section>
 
       <section className="w-full">

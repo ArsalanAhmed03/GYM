@@ -1,157 +1,117 @@
+import React from "react";
 import { MailIcon, PhoneIcon } from "lucide-react";
+import { motion } from "framer-motion";
 import { Button } from "../../components/ui/button";
 import { Card, CardContent } from "../../components/ui/card";
 import { Input } from "../../components/ui/input";
 import { Textarea } from "../../components/ui/textarea";
 
-export const ContactUs = (): JSX.Element => {
+// Simple fade & slide animations
+const fadeIn = {
+  hidden: { opacity: 0, y: 20 },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.5, ease: 'easeOut' } }
+};
+
+export const ContactUs: React.FC = (): JSX.Element => {
   return (
     <div
-      className="flex flex-col min-h-screen items-center justify-center gap-4 px-4 md:px-20 py-0 relative bg-cover bg-center"
-      style={{ backgroundImage: "url(..//bg1.png)" }}
+      className="flex flex-col min-h-screen items-center justify-center gap-8 px-4 md:px-20 py-10 bg-cover bg-center"
+      style={{ backgroundImage: "url('../bg1.png')" }}
     >
       {/* Contact Form Section */}
-      <section className="flex flex-col items-center justify-center gap-2 px-0 py-8 relative self-stretch w-full flex-[0_0_auto] bg-[#0f131ba6]">
-        <header className="flex items-center justify-center gap-2 px-4 md:px-[428px] py-0 relative self-stretch w-full flex-[0_0_auto]">
-          <h1 className="relative w-fit mt-[-1.00px] font-bold text-gray-300 text-3xl text-center tracking-[0] leading-9 whitespace-nowrap">
-            ---
-          </h1>
-        </header>
-        <header className="flex items-center justify-center gap-2 px-4 md:px-[428px] py-0 relative self-stretch w-full flex-[0_0_auto]">
-          <h1 className="relative w-fit mt-[-1.00px] font-bold text-gray-300 text-3xl text-center tracking-[0] leading-9 whitespace-nowrap">
-            Contact Us
-          </h1>
-        </header>
+      <motion.section
+        className="w-full max-w-3xl bg-[#0f131ba6] rounded-lg p-8"
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true, amount: 0.2 }}
+        variants={fadeIn}
+      >
+        <motion.h1
+          className="text-gray-300 text-3xl font-bold text-center mb-6"
+          variants={fadeIn}
+        >
+          Contact Us
+        </motion.h1>
 
-        <Card className="border-none w-full max-w-4xl bg-[#181e28] rounded-lg overflow-hidden">
-          <CardContent className="flex flex-col items-start gap-4 p-8">
-            <div className="inline-flex items-center gap-2 relative flex-[0_0_auto]">
-              <label className="font-bold text-gray-300 text-lg tracking-[0] leading-7 whitespace-nowrap">
-                Name
-              </label>
-            </div>
-
-            <Input
-              className="w-full bg-gray-700 text-[#b2b2b2] rounded p-4 border-0"
-              placeholder="Your Name"
-            />
-
-            <div className="inline-flex items-center justify-center gap-2 relative flex-[0_0_auto]">
-              <label className="font-bold text-gray-300 text-lg tracking-[0] leading-7">
-                Email
-              </label>
-            </div>
-
-            <Input
-              className="w-full bg-gray-700 text-[#b2b2b2] rounded p-4 border-0"
-              placeholder="Your Email"
-              type="email"
-            />
-
-            <div className="inline-flex items-center justify-center gap-2 relative flex-[0_0_auto]">
-              <label className="font-bold text-gray-300 text-lg tracking-[0] leading-7">
-                Message
-              </label>
-            </div>
-
-            <Textarea
-              className="w-full bg-gray-700 text-[#b2b2b2] rounded p-4 min-h-[100px] border-0"
-              placeholder="Your Message"
-            />
-
-            <Button className="w-full bg-[#ff4b2b] hover:bg-[#ff3b1b] text-white py-[7px] rounded border-0">
+        <motion.div className="space-y-4" variants={fadeIn}>
+          <motion.div variants={fadeIn}>
+            <Input placeholder="Your Name" className="w-full bg-gray-700 text-[#b2b2b2] rounded p-4 border-0" />
+          </motion.div>
+          <motion.div variants={fadeIn}>
+            <Input placeholder="Your Email" type="email" className="w-full bg-gray-700 text-[#b2b2b2] rounded p-4 border-0" />
+          </motion.div>
+          <motion.div variants={fadeIn}>
+            <Textarea placeholder="Your Message" className="w-full bg-gray-700 text-[#b2b2b2] rounded p-4 min-h-[100px] border-0" />
+          </motion.div>
+          <motion.div variants={fadeIn} className="text-center">
+            <Button className="w-full bg-[#ff4b2b] hover:bg-[#ff3b1b] text-white py-3 rounded">
               Send Message
             </Button>
-          </CardContent>
-        </Card>
-      </section>
+          </motion.div>
+        </motion.div>
+      </motion.section>
 
       {/* Location & Map Section */}
-      <section className="flex flex-col items-start gap-2 relative self-stretch w-full flex-[0_0_auto] bg-[#00000080]">
-        <header className="flex items-center justify-center gap-2 px-4 md:px-[365px] py-0 relative self-stretch w-full flex-[0_0_auto]">
-          <h2 className="relative w-fit mt-[-1.00px] font-bold text-gray-300 text-3xl text-center tracking-[0] leading-9 whitespace-nowrap">
-            Location &amp; Map
-          </h2>
-        </header>
-
-        <div className="flex flex-col md:flex-row items-start gap-9 relative self-stretch w-full flex-[0_0_auto]">
-          <Card className="border-none flex flex-col items-start gap-2 p-6 relative flex-1 self-stretch grow bg-[#181e28] rounded-lg">
-            <CardContent className="p-0">
-              <div className="inline-flex items-center justify-center gap-2 relative flex-[0_0_auto]">
-                <h3 className="relative w-fit mt-[-1.00px] font-bold text-gray-300 text-xl tracking-[0] leading-7 whitespace-nowrap">
-                  Our Address
-                </h3>
-              </div>
-
-              <div className="flex flex-col items-start relative flex-[0_0_auto] mt-2">
-                <p className="relative self-stretch mt-[-1.00px] font-normal text-gray-300 text-lg tracking-[0] leading-7">
-                  123 Fitness St,
-                </p>
-                <p className="relative self-stretch font-normal text-gray-300 text-lg tracking-[0] leading-7">
-                  Healthy City, HC 12345
-                </p>
-              </div>
-            </CardContent>
-          </Card>
-
-          <div className="flex flex-col items-center justify-center relative self-stretch flex-1">
-            <img
-              className="relative max-w-full h-auto object-cover rounded-lg"
-              alt="Map location"
+      <motion.section
+        className="w-full max-w-5xl bg-[#00000080] rounded-lg p-8"
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true, amount: 0.2 }}
+        variants={fadeIn}
+      >
+        <motion.h2 className="text-gray-300 text-3xl font-bold text-center mb-6" variants={fadeIn}>
+          Location & Map
+        </motion.h2>
+        <div className="flex flex-col md:flex-row gap-8">
+          <motion.div variants={fadeIn} className="flex-1">
+            <Card className="bg-[#131922] p-6 rounded-lg border-none">
+              <CardContent>
+                <h3 className="text-gray-300 text-xl font-bold mb-2">Our Address</h3>
+                <p className="text-gray-300">123 Fitness St, Healthy City, HC 12345</p>
+              </CardContent>
+            </Card>
+          </motion.div>
+          <motion.div variants={fadeIn} className="flex-1">
+            <motion.img
               src="/maps.png"
-              width={500}
-              height={500}
+              alt="Map location"
+              className="w-full h-64 object-cover rounded-lg"
+              initial={{ scale: 1.1, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1, transition: { duration: 0.6, ease: 'easeOut' } }}
             />
-          </div>
+          </motion.div>
         </div>
-      </section>
+      </motion.section>
 
       {/* Customer Support Section */}
-      <section className="flex flex-col items-start gap-2 px-4 md:px-16 py-14 relative self-stretch w-full flex-[0_0_auto] bg-[#00000080]">
-        <Card className="border-none w-full bg-[#181e28] rounded-lg overflow-hidden">
-          <CardContent className="flex flex-col items-start gap-[35px] px-8 py-6">
-            <div className="flex flex-col w-full items-start gap-3 relative flex-[0_0_auto]">
-              <div className="flex items-center gap-2 relative self-stretch w-full flex-[0_0_auto]">
-                <h2 className="relative w-full mt-[-1.00px] font-bold text-white text-2xl tracking-[0] leading-8">
-                  Customer Support
-                </h2>
-              </div>
-
-              <div className="flex items-center justify-center gap-2 relative self-stretch w-full flex-[0_0_auto]">
-                <p className="relative w-full mt-[-1.00px] font-normal text-white text-lg tracking-[0] leading-7">
-                  For any inquiries, please contact us:
-                </p>
-              </div>
-
-              <div className="flex items-center gap-2 px-[18px] py-0 relative self-stretch w-full flex-[0_0_auto]">
-                <MailIcon className="w-[18px] h-[13.5px] text-white" />
-                <span className="relative w-fit mt-[-1.00px] font-normal text-white text-lg tracking-[0] leading-7 whitespace-nowrap">
-                  Email:
-                </span>
-                <a
-                  href="mailto:support@example.com"
-                  className="relative w-fit mt-[-1.00px] font-normal text-blue-400 text-lg tracking-[0] leading-7 whitespace-nowrap"
-                >
-                  support@example.com
-                </a>
-              </div>
-
-              <div className="flex items-center gap-2 px-[18px] py-0 relative self-stretch w-full flex-[0_0_auto]">
-                <PhoneIcon className="w-[18px] h-[18px] text-white" />
-                <span className="relative w-fit mt-[-1.00px] font-normal text-white text-lg tracking-[0] leading-7 whitespace-nowrap">
-                  Phone:
-                </span>
-                <a
-                  href="tel:+15551234567"
-                  className="relative w-fit mt-[-1.00px] font-normal text-blue-400 text-lg tracking-[0] leading-7 whitespace-nowrap"
-                >
-                  +1 (555) 123-4567
-                </a>
-              </div>
-            </div>
-          </CardContent>
-        </Card>
-      </section>
+      <motion.section
+        className="w-full max-w-3xl bg-[#00000080] rounded-lg p-8"
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true, amount: 0.2 }}
+        variants={fadeIn}
+      >
+        <motion.h2 className="text-white text-2xl font-bold mb-4" variants={fadeIn}>
+          Customer Support
+        </motion.h2>
+        <motion.p className="text-white mb-6" variants={fadeIn}>
+          For any inquiries, please contact us:
+        </motion.p>
+        <motion.div className="space-y-4" variants={fadeIn}>
+          <motion.div className="flex items-center gap-2" variants={fadeIn}>
+            <MailIcon className="w-5 h-5 text-white" />
+            <a href="mailto:support@example.com" className="text-blue-400">
+              support@example.com
+            </a>
+          </motion.div>
+          <motion.div className="flex items-center gap-2" variants={fadeIn}>
+            <PhoneIcon className="w-5 h-5 text-white" />
+            <a href="tel:+15551234567" className="text-blue-400">
+              +1 (555) 123-4567
+            </a>
+          </motion.div>
+        </motion.div>
+      </motion.section>
     </div>
   );
 };

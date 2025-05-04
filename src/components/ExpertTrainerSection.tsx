@@ -1,57 +1,64 @@
+import React from "react";
 import { Card, CardContent } from "./ui/card";
+import { motion } from "framer-motion";
 
-export const ExpertTrainer = (): JSX.Element => {
-  // Trainers data
+export const ExpertTrainer: React.FC = (): JSX.Element => {
   const trainers = [
-    {
-      name: "John Doe",
-      specialty: "Strength Training",
-    },
-    {
-      name: "Jane Smith",
-      specialty: "Weight Loss",
-    },
-    {
-      name: "Emily Johnson",
-      specialty: "Cardio Fitness",
-    },
+    { name: "John Doe", specialty: "Strength Training", img: "/images/Trainers/GymTrainer1.jpg" },
+    { name: "Jane Smith", specialty: "Weight Loss", img: "/images/Trainers/GymTrainer2.jpg" },
+    { name: "Emily Johnson", specialty: "Cardio Fitness", img: "/images/Trainers/GymTrainer3.jpg" },
   ];
 
   return (
-    <div>
-      {/* Our Expert Trainers Section */}
-      <section className="flex flex-col items-start gap-6 px-4 py-10 relative self-stretch w-full bg-black/50">
-        <div className="flex items-center justify-center relative self-stretch w-full">
-          <h2 className="font-['Roboto',Helvetica] font-bold text-white text-3xl text-center tracking-[0] leading-9">
-            Our Expert Trainers
-          </h2>
-        </div>
+    <motion.section
+      className="flex flex-col items-center gap-6 px-4 py-10 w-full bg-black/50"
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0, transition: { duration: 0.4, ease: "easeOut" } }}
+      viewport={{ once: true }}
+    >
+      <motion.h2
+        className="font-['Roboto',Helvetica] font-bold text-white text-3xl text-center"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1, transition: { delay: 0.2, duration: 0.5 } }}
+      >
+        Our Expert Trainers
+      </motion.h2>
 
-        <div className="flex items-center justify-center gap-2 relative self-stretch w-full">
-          {trainers.map((trainer, index) => (
-            <Card
-              key={index}
-              className="flex flex-col w-[405px] items-center gap-2 p-6 bg-[#181e28] rounded-lg overflow-hidden shadow-[0px_10px_15px_-3px_#0000001a,0px_4px_6px_-4px_#0000001a] border-0"
-            >
-              <CardContent className="p-0 flex flex-col items-center w-full">
-                <img
-                  className="w-[200px] h-[200px] mb-2"
-                  alt={`${trainer.name} profile`}
-                  src="/whiteCircle.svg"
-                />
-
-                <h3 className="font-['Roboto',Helvetica] font-bold text-red-500 text-xl text-center tracking-[0] leading-7 mb-1">
-                  {trainer.name}
-                </h3>
-
-                <p className="font-['Roboto',Helvetica] font-normal text-white text-base text-center tracking-[0] leading-6">
-                  {trainer.specialty}
-                </p>
-              </CardContent>
+      <div className="flex flex-wrap justify-center gap-8 w-full">
+        {trainers.map((trainer, index) => (
+          <motion.div
+            key={index}
+            className="flex"
+            initial={{ opacity: 0, scale: 0.9 }}
+            animate={{ opacity: 1, scale: 1, transition: { delay: 0.3 + index * 0.1, duration: 0.4 } }}
+            whileHover={{ scale: 1.05 }}
+          >
+            <Card className="flex flex-col w-[300px] items-center gap-4 p-6 bg-[#131922] rounded-lg overflow-hidden shadow-lg border-none">
+              <motion.img
+                className="w-[200px] h-[200px] object-cover rounded-full mb-2 filter brightness-50"
+                alt={`${trainer.name} profile`}
+                src={trainer.img}
+                initial={{ scale: 0.8, opacity: 0 }}
+                animate={{ scale: 1, opacity: 1, transition: { delay: 0.4 + index * 0.1, duration: 0.5 } }}
+              />
+              <motion.h3
+                className="font-['Roboto',Helvetica] font-bold text-red-500 text-xl text-center mb-1"
+                initial={{ x: -10, opacity: 0 }}
+                animate={{ x: 0, opacity: 1, transition: { delay: 0.5 + index * 0.1, duration: 0.4 } }}
+              >
+                {trainer.name}
+              </motion.h3>
+              <motion.p
+                className="font-['Roboto',Helvetica] text-white text-base text-center"
+                initial={{ x: 10, opacity: 0 }}
+                animate={{ x: 0, opacity: 1, transition: { delay: 0.6 + index * 0.1, duration: 0.4 } }}
+              >
+                {trainer.specialty}
+              </motion.p>
             </Card>
-          ))}
-        </div>
-      </section>
-    </div>
+          </motion.div>
+        ))}
+      </div>
+    </motion.section>
   );
 };

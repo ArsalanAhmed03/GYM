@@ -1,9 +1,32 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Button } from "../components/ui/button";
 import { Card, CardContent } from "../components/ui/card";
 import { Checkbox } from "../components/ui/checkbox";
 import { Input } from "../components/ui/input";
+import { motion } from "framer-motion";
+
+const sectionVariants = {
+  hidden: { opacity: 0, y: 50 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: {
+      when: "beforeChildren",
+      staggerChildren: 0.15,
+      duration: 0.2,
+    },
+  },
+};
+
+const childVariants = {
+  hidden: { opacity: 0, y: 20 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.1 },
+  },
+};
 
 export const SignUpSection = () => {
   const navigate = useNavigate();
@@ -63,133 +86,119 @@ export const SignUpSection = () => {
   };
 
   return (
-    <section className="flex gap-0 pt-8 pb-16 px-8 self-stretch w-full bg-black flex-col items-center relative">
-      <div className="flex flex-col gap-8 self-stretch w-full items-center relative">
-        <Card className="inline-flex gap-8 p-8 bg-[#00000099] rounded-2xl flex-col items-center border-none">
+    <motion.section
+      className="flex flex-col items-center gap-8 pt-8 pb-16 px-8 w-full bg-black"
+      variants={sectionVariants}
+      initial="hidden"
+      whileInView="visible"
+      viewport={{ once: true, amount: 0.3 }}
+    >
+      <motion.div variants={childVariants} className="w-full max-w-[1276px]">
+        <Card className="flex flex-col items-center gap-8 p-8 bg-[#00000099] rounded-2xl border-none">
           <CardContent className="flex w-[263px] items-center justify-center gap-2 p-0">
             <p className="relative w-fit mt-[-1.00px] ml-[-28.50px] mr-[-28.50px] [font-family:'Roboto',Helvetica] font-bold text-white text-[32px] leading-10">
               SIGN UP FOR ACCESS
             </p>
           </CardContent>
-
-          <CardContent className="inline-flex flex-col items-center justify-center gap-2 p-0">
-            <p className="relative w-fit mt-[-1.00px] font-m3-headline-small font-[number:var(--m3-headline-small-font-weight)] text-white text-[length:var(--m3-headline-small-font-size)] tracking-[var(--m3-headline-small-letter-spacing)] leading-[var(--m3-headline-small-line-height)] whitespace-nowrap [font-style:var(--m3-headline-small-font-style)]">
+          <CardContent className="flex justify-center p-0">
+            <p className="text-white text-[length:var(--m3-headline-small-font-size)] font-medium">
               GET THE LATEST HEALTH UPDATES
             </p>
           </CardContent>
         </Card>
-      </div>
+      </motion.div>
 
-      <form onSubmit={handleSubmit} className="flex flex-col gap-8 w-[1276px]">
-        <div className="flex items-start justify-center gap-8">
-          <Card className="flex flex-col items-start gap-4 p-8 relative flex-1 bg-[#00000099] rounded-2xl border-none">
-            <CardContent className="flex w-[263px] items-center gap-2 p-0">
-              <label className="relative w-fit mt-[-1.00px] font-m3-headline-small font-[number:var(--m3-headline-small-font-weight)] text-white text-[length:var(--m3-headline-small-font-size)] tracking-[var(--m3-headline-small-letter-spacing)] leading-[var(--m3-headline-small-line-height)] whitespace-nowrap [font-style:var(--m3-headline-small-font-style)]">
-                First name
-              </label>
-            </CardContent>
-            <Input
-              name="firstName"
-              value={formData.firstName}
-              onChange={handleInputChange}
-              className="w-full bg-transparent border-white text-white"
-              required
-            />
-          </Card>
-
-          <Card className="flex flex-col items-start gap-4 p-8 relative flex-1 bg-[#00000099] rounded-2xl border-none">
-            <CardContent className="flex w-[263px] items-center gap-2 p-0">
-              <label className="relative w-fit mt-[-1.00px] font-m3-headline-small font-[number:var(--m3-headline-small-font-weight)] text-white text-[length:var(--m3-headline-small-font-size)] tracking-[var(--m3-headline-small-letter-spacing)] leading-[var(--m3-headline-small-line-height)] whitespace-nowrap [font-style:var(--m3-headline-small-font-style)]">
-                Last name
-              </label>
-            </CardContent>
-            <Input
-              name="lastName"
-              value={formData.lastName}
-              onChange={handleInputChange}
-              className="w-full bg-transparent border-white text-white"
-              required
-            />
-          </Card>
-        </div>
-
-        <div className="flex items-start justify-center gap-8">
-          <Card className="flex flex-col items-start gap-4 p-8 relative flex-1 bg-[#00000099] rounded-2xl border-none">
-            <CardContent className="flex w-[263px] items-center gap-2 p-0">
-              <label className="relative w-fit mt-[-1.00px] font-m3-headline-small font-[number:var(--m3-headline-small-font-weight)] text-white text-[length:var(--m3-headline-small-font-size)] tracking-[var(--m3-headline-small-letter-spacing)] leading-[var(--m3-headline-small-line-height)] whitespace-nowrap [font-style:var(--m3-headline-small-font-style)]">
-                Email address
-              </label>
-            </CardContent>
-            <Input
-              name="email"
-              type="email"
-              value={formData.email}
-              onChange={handleInputChange}
-              className="w-full bg-transparent border-white text-white"
-              required
-            />
-          </Card>
-
-          <Card className="flex flex-col items-start gap-4 p-8 relative flex-1 bg-[#00000099] rounded-2xl border-none">
-            <CardContent className="flex w-[263px] items-center gap-2 p-0">
-              <label className="relative w-fit mt-[-1.00px] font-m3-headline-small font-[number:var(--m3-headline-small-font-weight)] text-white text-[length:var(--m3-headline-small-font-size)] tracking-[var(--m3-headline-small-letter-spacing)] leading-[var(--m3-headline-small-line-height)] whitespace-nowrap [font-style:var(--m3-headline-small-font-style)]">
-                Phone Number
-              </label>
-            </CardContent>
-            <Input
-              name="phone"
-              type="tel"
-              value={formData.phone}
-              onChange={handleInputChange}
-              className="w-full bg-transparent border-white text-white"
-              required
-            />
-          </Card>
-        </div>
-
-        <div className="w-full px-8 py-0 flex items-center gap-2 relative">
-          <div className="flex items-center space-x-2">
-            <Checkbox
-              id="terms"
-              name="termsAccepted"
-              checked={formData.termsAccepted}
-              onCheckedChange={(checked) =>
-                setFormData((prev) => ({
-                  ...prev,
-                  termsAccepted: checked as boolean,
-                }))
-              }
-              className="w-[23px] h-[23px] rounded-sm border border-solid border-white"
-            />
-            <label
-              htmlFor="terms"
-              className="relative w-fit mt-[-1.00px] font-m3-title-large font-[number:var(--m3-title-large-font-weight)] text-white text-[length:var(--m3-title-large-font-size)] tracking-[var(--m3-title-large-letter-spacing)] leading-[var(--m3-title-large-line-height)] whitespace-nowrap [font-style:var(--m3-title-large-font-style)]"
+      <motion.form
+        onSubmit={handleSubmit}
+        className="flex flex-col gap-8 w-full max-w-[1276px]"
+        variants={childVariants}
+      >
+        {/* Name Fields */}
+        <motion.div className="flex gap-8" variants={childVariants}>
+          {["firstName", "lastName"].map((field) => (
+            <Card
+              key={field}
+              className="flex-1 flex-col gap-4 p-8 bg-[#00000099] rounded-2xl border-none"
             >
-              By submitting this form, you accept the Terms &amp; Conditions
-            </label>
-          </div>
-        </div>
+              <CardContent className="p-0">
+                <label className="text-white text-[length:var(--m3-headline-small-font-size)]">
+                  {field === "firstName" ? "First name" : "Last name"}
+                </label>
+              </CardContent>
+              <Input
+                name={field}
+                value={formData[field as keyof typeof formData] as string}
+                onChange={handleInputChange}
+                className="w-full bg-transparent border-white text-white"
+                required
+              />
+            </Card>
+          ))}
+        </motion.div>
 
-        <div className="flex justify-center gap-4">
-          <Button
-            type="submit"
-            className="flex w-56 items-center justify-center gap-2 py-[21px] relative mb-[-24.00px] bg-white text-black"
-          >
-            <span className="relative w-fit mt-[-1.00px] font-m3-title-small font-[number:var(--m3-title-small-font-weight)] text-[length:var(--m3-title-small-font-size)] tracking-[var(--m3-title-small-letter-spacing)] leading-[var(--m3-title-small-line-height)] whitespace-nowrap [font-style:var(--m3-title-small-font-style)]">
-              SIGN UP
-            </span>
+        {/* Contact Fields */}
+        <motion.div className="flex gap-8" variants={childVariants}>
+          {["email", "phone"].map((field) => (
+            <Card
+              key={field}
+              className="flex-1 flex-col gap-4 p-8 bg-[#00000099] rounded-2xl border-none"
+            >
+              <CardContent className="p-0">
+                <label className="text-white text-[length:var(--m3-headline-small-font-size)]">
+                  {field === "email" ? "Email address" : "Phone Number"}
+                </label>
+              </CardContent>
+              <Input
+                name={field}
+                type={field === "email" ? "email" : "tel"}
+                value={formData[field as keyof typeof formData] as string}
+                onChange={handleInputChange}
+                className="w-full bg-transparent border-white text-white"
+                required
+              />
+            </Card>
+          ))}
+        </motion.div>
+
+        {/* Terms Checkbox */}
+        <motion.div
+          className="flex items-center gap-2 px-8"
+          variants={childVariants}
+        >
+          <Checkbox
+            id="terms"
+            name="termsAccepted"
+            checked={formData.termsAccepted}
+            onCheckedChange={(checked) =>
+              setFormData((prev) => ({
+                ...prev,
+                termsAccepted: checked as boolean,
+              }))
+            }
+            className="w-[23px] h-[23px] rounded-sm border-white"
+          />
+          <label htmlFor="terms" className="text-white">
+            By submitting this form, you accept the Terms &amp; Conditions
+          </label>
+        </motion.div>
+
+        {/* Buttons */}
+        <motion.div
+          className="flex justify-center gap-4"
+          variants={childVariants}
+        >
+          <Button type="submit" className="w-56 py-5 bg-white text-black">
+            SIGN UP
           </Button>
           <Button
             type="button"
             onClick={() => navigate("/login")}
-            className="flex w-56 items-center justify-center gap-2 py-[21px] relative mb-[-24.00px] bg-transparent border border-white text-white"
+            className="w-56 py-5 bg-transparent border border-white text-white"
           >
-            <span className="relative w-fit mt-[-1.00px] font-m3-title-small font-[number:var(--m3-title-small-font-weight)] text-[length:var(--m3-title-small-font-size)] tracking-[var(--m3-title-small-letter-spacing)] leading-[var(--m3-title-small-line-height)] whitespace-nowrap [font-style:var(--m3-title-small-font-style)]">
-              LOGIN
-            </span>
+            LOGIN
           </Button>
-        </div>
-      </form>
-    </section>
+        </motion.div>
+      </motion.form>
+    </motion.section>
   );
 };

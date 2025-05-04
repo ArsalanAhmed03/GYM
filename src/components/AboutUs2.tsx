@@ -1,35 +1,73 @@
 import React from "react";
-import { Card, CardContent} from "./ui/card";
+import { motion } from "framer-motion";
+import { Card, CardContent } from "./ui/card";
 
-export const AboutUs2 = (): JSX.Element => {
+// Animation Variants
+const containerVariants = {
+  hidden: { opacity: 0, y: 20 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: { when: "beforeChildren", staggerChildren: 0.2, duration: 0.2 }
+  }
+};
+
+const imageVariants = {
+  hidden: { opacity: 0, scale: 1.1 },
+  visible: { opacity: 0.3, scale: 1, transition: { duration: 0.8, ease: "easeOut" } }
+};
+
+const contentVariants = {
+  hidden: { opacity: 0, y: 10 },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.5, ease: "easeOut" } }
+};
+
+export const AboutUs2: React.FC = (): JSX.Element => {
   return (
-    <Card className="border-none flex flex-col items-center self-stretch w-full bg-[#0e0505] rounded-lg overflow-hidden shadow-[0px_10px_15px_-3px_#0000001a,0px_4px_6px_-4px_#0000001a]">
-      <div className="relative w-full h-[456px] [background:url(..//bg3.png)_50%_50%_/_cover] opacity-30" />
+    <motion.div
+      className="flex flex-col items-center w-full bg-[#0e0505] rounded-lg overflow-hidden shadow-lg"
+      variants={containerVariants}
+      initial="hidden"
+      whileInView="visible"
+      viewport={{ once: true, amount: 0.3 }}
+    >
+      {/* Background Image */}
+      <motion.div
+        className="relative w-full h-[456px] bg-cover bg-center"
+        style={{ backgroundImage: "url('../bg3.png')" }}
+        variants={imageVariants}
+      />
 
-      <CardContent className="border-none flex flex-col items-start gap-4 px-9 py-8 w-full">
-        <div className="flex items-center gap-2">
-          <h2 className="font-bold text-neutral-50 text-2xl leading-8 font-['Roboto',Helvetica]">
-            A Commitment to Growth
-          </h2>
-        </div>
+      <motion.div
+        className="w-full bg-[#0e0505]"
+        variants={contentVariants}
+      >
+        <Card className="border-none bg-transparent shadow-none">
+          <CardContent className="flex flex-col items-start gap-4 px-9 py-8 w-full">
+            <motion.h2
+              className="font-bold text-neutral-50 text-3xl leading-9"
+              variants={contentVariants}
+            >
+              A Commitment to Growth
+            </motion.h2>
 
-        <div className="flex flex-col items-center gap-2">
-          <p className="text-neutral-50 text-lg leading-7 font-['Roboto',Helvetica]">
-            From our original location with just a few weights and a handful of
-            members, we have expanded to include state-of-the-art equipment,
-            diverse classes, and a community that supports one another. Our
-            journey is a testament to the power of perseverance, and we are
-            proud to have witnessed countless transformations along the way.
-          </p>
-
-          <p className="text-neutral-50 text-lg leading-7 font-['Roboto',Helvetica]">
-            As we look to the future, we remain dedicated to fostering a
-            welcoming environment where everyone can thrive. Join us as we
-            continue to grow, innovate, and celebrate the incredible journey of
-            fitness together.
-          </p>
-        </div>
-      </CardContent>
-    </Card>
+            <div className="flex flex-col gap-4">
+              {[
+                "From our original location with just a few weights and a handful of members, we have expanded to include state-of-the-art equipment, diverse classes, and a community that supports one another.",
+                "As we look to the future, we remain dedicated to fostering a welcoming environment where everyone can thrive. Join us as we continue to grow, innovate, and celebrate the incredible journey of fitness together."
+              ].map((text, idx) => (
+                <motion.p
+                  key={idx}
+                  className="text-neutral-50 text-lg leading-7"
+                  variants={contentVariants}
+                >
+                  {text}
+                </motion.p>
+              ))}
+            </div>
+          </CardContent>
+        </Card>
+      </motion.div>
+    </motion.div>
   );
 };

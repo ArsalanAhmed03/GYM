@@ -12,10 +12,10 @@ export const DietNutritionPlans = (): JSX.Element => {
       data-model-id="91:833"
     >
       <div className="mt-6"></div>
-      <Diet1 />
       <Diet2 />
       <Diet3 />
       <Diet4 />
+      <Diet1 />
     </div>
   );
 };

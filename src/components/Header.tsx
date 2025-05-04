@@ -1,16 +1,36 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { Button } from "./ui/button";
+import { motion } from "framer-motion";
 
 const navItems = [
   { name: "Home", path: "/" },
   { name: "About", path: "/about-us" },
-  { name: "Services", path: "/services" },
+  { name: "Services", path: "/Services" },
   { name: "Store", path: "/store" },
   { name: "Membership", path: "/price-range" },
   { name: "Diet Plans", path: "/Diet" },
   { name: "Contact", path: "/contact" },
 ];
+
+const containerVariants = {
+  hidden: { y: -50, opacity: 0 },
+  visible: {
+    y: 0,
+    opacity: 1,
+    transition: {
+      duration: 0.6,
+      ease: "easeOut",
+      when: "beforeChildren",
+      staggerChildren: 0.1,
+    },
+  },
+};
+
+const itemVariants = {
+  hidden: { opacity: 0, y: -10 },
+  visible: { opacity: 1, y: 0 },
+};
 
 const Header: React.FC = () => {
   const navigate = useNavigate();
@@ -18,7 +38,6 @@ const Header: React.FC = () => {
   const [userName, setUserName] = useState("");
 
   useEffect(() => {
-    // Check if user is logged in
     const token = localStorage.getItem("token");
     const user = localStorage.getItem("user");
     if (token && user) {
@@ -36,53 +55,83 @@ const Header: React.FC = () => {
   };
 
   return (
-    <nav className="fixed top-0 left-0 w-full backdrop-blur-md bg-black/30 z-50">
+    <motion.nav
+      className="fixed top-0 left-0 w-full backdrop-blur-md bg-black/30 z-50"
+      variants={containerVariants}
+      initial="hidden"
+      animate="visible"
+    >
       <div className="flex justify-between items-center px-8 py-5">
-        <img
+        <motion.img
           src="/logo-no-background-1.png"
           alt="Logo"
-          className="w-[162px] h-12 object-contain"
+          className="w-[162px] h-12 object-contain cursor-pointer"
+          onClick={() => navigate("/")}
+          whileHover={{ scale: 1.1, rotate: [0, 5, -5, 0] }}
+          transition={{ duration: 0.4 }}
         />
-        <div className="flex items-center gap-8">
+        <motion.div
+          className="flex items-center gap-8"
+          variants={containerVariants}
+          initial="hidden"
+          animate="visible"
+        >
           {navItems.map((item, index) => (
-            <span
+            <motion.span
               key={index}
               onClick={() => navigate(item.path)}
               className="text-white text-lg font-semibold cursor-pointer hover:underline"
+              variants={itemVariants}
+              whileHover={{ scale: 1.2, color: "#fbbf24" }}
+              transition={{ type: "spring", stiffness: 300 }}
             >
               {item.name}
-            </span>
+            </motion.span>
           ))}
-        </div>
-        <div className="flex items-center gap-4">
+        </motion.div>
+        <motion.div
+          className="flex items-center gap-4"
+          variants={containerVariants}
+          initial="hidden"
+          animate="visible"
+        >
           {isLoggedIn ? (
             <>
-              <span className="text-white text-lg font-semibold">
+              <motion.span
+                className="text-white text-lg font-semibold"
+                variants={itemVariants}
+              >
                 Welcome, {userName}
-              </span>
-              <Button className="bg-gray-700 text-white" onClick={handleLogout}>
-                Logout
-              </Button>
+              </motion.span>
+              <motion.div whileHover={{ scale: 1.05 }} transition={{ duration: 0.2 }}>
+                <Button className="bg-gray-700 text-white" onClick={handleLogout}>
+                  Logout
+                </Button>
+              </motion.div>
             </>
           ) : (
             <>
-              <Button
-                className="bg-gray-700 text-white"
-                onClick={() => navigate("/login")}
-              >
-                Login
-              </Button>
-              <Button
-                className="bg-gray-700 text-white"
-                onClick={() => navigate("/signup")}
-              >
-                Register
-              </Button>
+              <motion.div whileHover={{ scale: 1.05 }} transition={{ duration: 0.2 }}>
+                <Button
+                  className="bg-gray-700 text-white"
+                  onClick={() => navigate("/login")}
+                >
+                  Login
+                </Button>
+              </motion.div>
+              <motion.div whileHover={{ scale: 1.05 }} transition={{ duration: 0.2 }}>
+                <Button
+                  className="bg-gray-700 text-white"
+                  onClick={() => navigate("/signup")}
+                >
+                  Register
+                </Button>
+              </motion.div>
             </>
           )}
-        </div>
+        </motion.div>
       </div>
-    </nav>
+    </motion.nav>
   );
 };
 
