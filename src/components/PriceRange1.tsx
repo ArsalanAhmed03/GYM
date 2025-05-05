@@ -41,7 +41,7 @@ export const PriceRange1 = (): JSX.Element => {
     };
 
     fetchPlans();
-  }, []);
+  }, [user]);
 
   const handlePlanSelection = async (planId: string) => {
     if (!isAuthenticated) {

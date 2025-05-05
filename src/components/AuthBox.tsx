@@ -53,9 +53,9 @@ export const AuthBox: React.FC = () => {
         const selectedPlanId = localStorage.getItem("selectedPlanId");
         if (selectedPlanId) {
           localStorage.removeItem("selectedPlanId");
-          navigate("/price-range");
+          navigate("/price-range", { replace: true });
         } else {
-          navigate("/");
+          navigate("/", { replace: true });
         }
       } else {
         const response = await fetch(
@@ -80,7 +80,7 @@ export const AuthBox: React.FC = () => {
 
         // After successful registration, log the user in
         await login(formData.email, formData.password);
-        navigate("/");
+        navigate("/", { replace: true });
       }
     } catch (err) {
       setError(

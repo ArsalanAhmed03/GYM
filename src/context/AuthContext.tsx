@@ -15,6 +15,7 @@ interface AuthContextType {
   login: (email: string, password: string) => Promise<void>;
   logout: () => void;
   error: string | null;
+  token: string | null;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -25,16 +26,18 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
   const [user, setUser] = useState<User | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [token, setToken] = useState<string | null>(null);
 
   useEffect(() => {
     // Check if user is logged in on mount
     const checkAuth = async () => {
       try {
-        const token = localStorage.getItem("token");
-        if (token) {
+        const storedToken = localStorage.getItem("token");
+        if (storedToken) {
+          setToken(storedToken);
           const response = await fetch("http://localhost:5000/api/auth/me", {
             headers: {
-              Authorization: `Bearer ${token}`,
+              Authorization: `Bearer ${storedToken}`,
             },
           });
 
@@ -44,7 +47,10 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
           } else {
             localStorage.removeItem("token");
             setUser(null);
+            setToken(null);
           }
+        } else {
+          setToken(null);
         }
       } catch (err) {
         console.error("Auth check failed:", err);
@@ -74,6 +80,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
       }
 
       localStorage.setItem("token", data.token);
+      setToken(data.token);
       setUser(data.user);
     } catch (err) {
       setError(err instanceof Error ? err.message : "Login failed");
@@ -84,6 +91,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
   const logout = () => {
     localStorage.removeItem("token");
     setUser(null);
+    setToken(null);
   };
 
   return (
@@ -95,6 +103,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
         login,
         logout,
         error,
+        token,
       }}
     >
       {children}

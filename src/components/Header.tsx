@@ -1,7 +1,8 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import { useNavigate } from "react-router-dom";
 import { Button } from "./ui/button";
 import { motion } from "framer-motion";
+import { useAuth } from "../context/AuthContext";
 
 const navItems = [
   { name: "Home", path: "/" },
@@ -34,23 +35,10 @@ const itemVariants = {
 
 const Header: React.FC = () => {
   const navigate = useNavigate();
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [userName, setUserName] = useState("");
-
-  useEffect(() => {
-    const token = localStorage.getItem("token");
-    const user = localStorage.getItem("user");
-    if (token && user) {
-      setIsLoggedIn(true);
-      const userData = JSON.parse(user);
-      setUserName(userData.name || "User");
-    }
-  }, []);
+  const { user, isAuthenticated, logout } = useAuth();
 
   const handleLogout = () => {
-    localStorage.removeItem("token");
-    localStorage.removeItem("user");
-    setIsLoggedIn(false);
+    logout();
     navigate("/");
   };
 
@@ -95,23 +83,32 @@ const Header: React.FC = () => {
           initial="hidden"
           animate="visible"
         >
-          {isLoggedIn ? (
+          {isAuthenticated ? (
             <>
               <motion.span
                 className="text-white text-lg font-semibold"
                 variants={itemVariants}
               >
-                Welcome, {userName}
+                Welcome, {user?.username || user?.email || "User"}
               </motion.span>
-              <motion.div whileHover={{ scale: 1.05 }} transition={{ duration: 0.2 }}>
-                <Button className="bg-gray-700 text-white" onClick={handleLogout}>
+              <motion.div
+                whileHover={{ scale: 1.05 }}
+                transition={{ duration: 0.2 }}
+              >
+                <Button
+                  className="bg-gray-700 text-white"
+                  onClick={handleLogout}
+                >
                   Logout
                 </Button>
               </motion.div>
             </>
           ) : (
             <>
-              <motion.div whileHover={{ scale: 1.05 }} transition={{ duration: 0.2 }}>
+              <motion.div
+                whileHover={{ scale: 1.05 }}
+                transition={{ duration: 0.2 }}
+              >
                 <Button
                   className="bg-gray-700 text-white"
                   onClick={() => navigate("/login")}
@@ -119,7 +116,10 @@ const Header: React.FC = () => {
                   Login
                 </Button>
               </motion.div>
-              <motion.div whileHover={{ scale: 1.05 }} transition={{ duration: 0.2 }}>
+              <motion.div
+                whileHover={{ scale: 1.05 }}
+                transition={{ duration: 0.2 }}
+              >
                 <Button
                   className="bg-gray-700 text-white"
                   onClick={() => navigate("/signup")}

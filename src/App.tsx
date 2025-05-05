@@ -14,7 +14,7 @@ import StorePage from "./screens/StorePageGym/StorePage";
 import FAQPage from "./screens/FaqsPage/FAQPage";
 import WorkoutProgram from "./screens/WorkOutPage/WorkOutPage";
 import GymEquipmentPage from "./screens/GymEquipment/GymEquipmentPage";
-import { AuthProvider } from "./context/AuthContext";
+import { AuthProvider, useAuth } from "./context/AuthContext";
 import ContactUsPage from "./screens/ContactUs/ContactUsPage";
 import DietPage from "./screens/Diet/DietPage";
 import EventsPage from "./screens/Events/EventsPage";
@@ -23,10 +23,31 @@ import EventsPage from "./screens/Events/EventsPage";
 const ProtectedRoute: React.FC<{ children: React.ReactNode }> = ({
   children,
 }) => {
-  const token = localStorage.getItem("token");
-  if (!token) {
+  const { isAuthenticated, isLoading } = useAuth();
+
+  if (isLoading) {
+    return <div>Loading...</div>;
+  }
+
+  if (!isAuthenticated) {
     return <Navigate to="/login" replace />;
   }
+
+  return <>{children}</>;
+};
+
+// Public Route component (redirects to home if already authenticated)
+const PublicRoute: React.FC<{ children: React.ReactNode }> = ({ children }) => {
+  const { isAuthenticated, isLoading } = useAuth();
+
+  if (isLoading) {
+    return <div>Loading...</div>;
+  }
+
+  if (isAuthenticated) {
+    return <Navigate to="/" replace />;
+  }
+
   return <>{children}</>;
 };
 
@@ -35,10 +56,8 @@ const App: React.FC = () => {
     <AuthProvider>
       <Router>
         <Routes>
-          {/* Main App Routes */}
+          {/* Public Routes */}
           <Route path="/" element={<HomePage />} />
-          <Route path="/login" element={<LoginPage />} />
-          <Route path="/signup" element={<AuthBox />} />
           <Route path="/about-us" element={<AboutUsPage />} />
           <Route path="/price-range" element={<PriceRangePage />} />
           <Route path="/store" element={<StorePage />} />
@@ -49,7 +68,23 @@ const App: React.FC = () => {
           <Route path="/Diet" element={<DietPage />} />
           <Route path="/Events" element={<EventsPage />} />
 
-
+          {/* Auth Routes */}
+          <Route
+            path="/login"
+            element={
+              <PublicRoute>
+                <LoginPage />
+              </PublicRoute>
+            }
+          />
+          <Route
+            path="/signup"
+            element={
+              <PublicRoute>
+                <AuthBox />
+              </PublicRoute>
+            }
+          />
 
           {/* Protected Routes */}
           <Route

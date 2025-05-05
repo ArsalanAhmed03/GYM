@@ -9,7 +9,6 @@ import { Button } from "../components/ui/button";
 import { Input } from "../components/ui/input";
 import { useAuth } from "../context/AuthContext";
 import { useNavigate } from "react-router-dom";
-import { authAPI } from "../lib/api";
 
 interface LoginModalProps {
   isOpen: boolean;
@@ -31,8 +30,7 @@ export const LoginModal = ({
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      const data = await authAPI.login({ email, password });
-      login(data.token, data.user);
+      await login(email, password);
       onClose();
       if (onLoginSuccess) {
         onLoginSuccess();
@@ -77,14 +75,15 @@ export const LoginModal = ({
           </div>
           {error && <p className="text-red-500">{error}</p>}
           <div className="flex justify-end gap-2">
-            <Button
+          <Button
               type="button"
               variant="outline"
               onClick={onClose}
-              className="text-white border-gray-600"
+              className="  border-red-500 text-red-500 px-4 py-2  "
             >
               Cancel
             </Button>
+
             <Button
               type="submit"
               className="bg-red-500 hover:bg-red-600 text-white"
