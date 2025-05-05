@@ -8,6 +8,7 @@ import productRoutes from './routes/productRoutes';
 import cartRoutes from './routes/cartRoutes';
 import purchaseRoutes from './routes/purchaseRoutes';
 import trainerRoutes from './routes/trainerRoutes';
+import pricingPlanRoutes from './routes/pricingPlanRoutes';
 
 // Load environment variables
 dotenv.config();
@@ -28,6 +29,7 @@ app.use('/api/products', productRoutes);
 app.use('/api/cart', cartRoutes);
 app.use('/api/purchase', purchaseRoutes);
 app.use('/api/trainers', trainerRoutes);
+app.use('/api/pricing-plans', pricingPlanRoutes);
 
 // Error handling middleware
 app.use((err: any, req: express.Request, res: express.Response, next: express.NextFunction) => {
