@@ -88,17 +88,17 @@ export const Event1 = (): JSX.Element => {
                 </p>
               </div>
 
-              <ArrowRightIcon className="w-4 h-4 text-white" />
+              {/* <ArrowRightIcon className="w-4 h-4 text-white" /> */}
             </CardContent>
           </Card>
         ))}
       </div>
 
-      <div className="flex flex-col items-center justify-center gap-2 w-full">
+      {/* <div className="flex flex-col items-center justify-center gap-2 w-full">
         <Button className="w-[127px] h-10 bg-red-500 hover:bg-red-600 text-white rounded font-normal text-base [font-family:'Roboto',Helvetica]">
           Register Now
         </Button>
-      </div>
+      </div> */}
     </section>
   );
 };

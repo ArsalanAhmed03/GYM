@@ -1,12 +1,13 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 const footerItems = [
-  "Home",
-  "About",
-  "Services",
-  "Membership",
-  "Diet Plans",
-  "Contact",
+  { name: "Home", path: "/" },
+  { name: "About", path: "/about-us" },
+  { name: "Services", path: "/services" },
+  { name: "Membership", path: "/price-range" },
+  { name: "Diet Plans", path: "/diet" },
+  { name: "Contact", path: "/contact" },
 ];
 
 const Footer: React.FC = () => (
@@ -26,23 +27,22 @@ const Footer: React.FC = () => (
           </div>
         </div>
         <div className="flex items-center gap-6">
-          <img src="/FB.svg" alt="Instagram" className="w-4 h-4" />
-          <img src="/Instagram.svg" alt="Facebook" className="w-4 h-4" />
+          <img src="/FB.svg" alt="Facebook" className="w-4 h-4" />
+          <img src="/Instagram.svg" alt="Instagram" className="w-4 h-4" />
           <img src="/twitter.svg" alt="Twitter" className="w-4 h-4" />
         </div>
       </div>
+
       <div className="flex justify-center items-center flex-wrap gap-8 text-sm text-gray-400">
-        {footerItems.map((item, index) => (
-          <span key={index} className="hover:text-white cursor-pointer">
-            {item}
-          </span>
+        {footerItems.map((item) => (
+          <Link
+            key={item.path}
+            to={item.path}
+            className="hover:text-white cursor-pointer"
+          >
+            {item.name}
+          </Link>
         ))}
-      </div>
-      <div className="flex justify-end gap-6 text-sm text-gray-400">
-        <span className="hover:text-white cursor-pointer">Privacy Policy</span>
-        <span className="hover:text-white cursor-pointer">
-          Terms of Service
-        </span>
       </div>
     </div>
   </footer>
