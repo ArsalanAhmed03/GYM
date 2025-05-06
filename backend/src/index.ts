@@ -13,6 +13,7 @@ import nutritionTipsRoutes from './routes/nutritionTips';
 import healthyRecipesRoutes from './routes/healthyRecipes';
 import emailSubscriptionsRoutes from './routes/emailSubscriptions';
 import contactMessagesRoutes from './routes/contactMessages';
+import eventRoutes from './routes/eventRoutes';
 
 // Load environment variables
 dotenv.config();
@@ -38,6 +39,7 @@ app.use('/api/nutrition-tips', nutritionTipsRoutes);
 app.use('/api/healthy-recipes', healthyRecipesRoutes);
 app.use('/api/email-subscriptions', emailSubscriptionsRoutes);
 app.use('/api/contact-messages', contactMessagesRoutes);
+app.use('/api/events', eventRoutes);
 
 // Error handling middleware
 app.use((err: any, req: express.Request, res: express.Response, next: express.NextFunction) => {

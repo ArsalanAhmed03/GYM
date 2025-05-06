@@ -1,53 +1,16 @@
 import { ArrowRightIcon } from "lucide-react";
 import { Button } from "./ui/button";
 import { Card, CardContent } from "./ui/card";
+import { useEffect, useState } from "react";
 
 export const Event1 = (): JSX.Element => {
-  // Event data for mapping
-  const events = [
-    {
-      id: 1,
-      name: "Event Name 1",
-      date: "March 15, 2023",
-      description:
-        "A brief overview of the event highlighting key details and activities.",
-    },
-    {
-      id: 2,
-      name: "Event Name 2",
-      date: "April 20, 2023",
-      description:
-        "A brief overview of the event highlighting key details and activities.",
-    },
-    {
-      id: 3,
-      name: "Event Name 3",
-      date: "May 10, 2023",
-      description:
-        "A brief overview of the event highlighting key details and activities.",
-    },
-    {
-      id: 4,
-      name: "Event Name 4",
-      date: "June 25, 2023",
-      description:
-        "A brief overview of the event highlighting key details and activities.",
-    },
-    {
-      id: 5,
-      name: "Event Name 5",
-      date: "July 18, 2023",
-      description:
-        "A brief overview of the event highlighting key details and activities.",
-    },
-    {
-      id: 6,
-      name: "Event Name 6",
-      date: "August 30, 2023",
-      description:
-        "A brief overview of the event highlighting key details and activities.",
-    },
-  ];
+  const [events, setEvents] = useState<any[]>([]);
+
+  useEffect(() => {
+    fetch("http://localhost:5000/api/events")
+      .then((res) => res.json())
+      .then((data) => setEvents(data));
+  }, []);
 
   return (
     <section className="flex flex-col items-start gap-4 px-4 py-8 w-full bg-[#00000080]">
