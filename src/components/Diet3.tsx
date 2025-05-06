@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { Card, CardContent } from "./ui/card";
-import { motion } from "framer-motion";
+import { motion, Variants } from "framer-motion";
 
-// Animation variants
-const sectionVariants = {
+// Framer Motion variants for the section and cards
+const sectionVariants: Variants = {
   hidden: { opacity: 0, y: 20 },
   visible: {
     opacity: 1,
@@ -16,7 +16,7 @@ const sectionVariants = {
   },
 };
 
-const cardVariants = {
+const cardVariants: Variants = {
   hidden: { opacity: 0, scale: 0.9 },
   visible: {
     opacity: 1,
@@ -25,18 +25,40 @@ const cardVariants = {
   },
 };
 
+// Match your Mongoose model schema
+interface HealthyRecipe {
+  _id: string;
+  title: string;
+  description: string;
+  calories: number;
+  imageUrl?: string;
+}
+
 export const Diet3: React.FC = () => {
-  const [recipes, setRecipes] = useState<any[]>([]);
+  const [recipes, setRecipes] = useState<HealthyRecipe[]>([]);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    fetch("http://localhost:5000/api/healthy-recipes")
-      .then((res) => res.json())
-      .then((data) => {
+    const fetchRecipes = async () => {
+      setLoading(true);
+      setError(null);
+
+      try {
+        const res = await fetch("http://localhost:5000/api/healthy-recipes");
+        if (!res.ok) throw new Error("Failed to fetch recipes");
+        const data: HealthyRecipe[] = await res.json();
+        console.log("Fetched recipes:", data);
         setRecipes(data);
+      } catch (err: any) {
+        console.error("Error fetching recipes:", err);
+        setError(err.message);
+      } finally {
         setLoading(false);
-      })
-      .catch(() => setLoading(false));
+      }
+    };
+
+    fetchRecipes();
   }, []);
 
   return (
@@ -44,54 +66,47 @@ export const Diet3: React.FC = () => {
       className="flex flex-col items-center justify-center gap-6 py-10 w-full bg-[#00000080]"
       variants={sectionVariants}
       initial="hidden"
-      whileInView="visible"
-      viewport={{ once: true, amount: 0.3 }}
+      animate="visible"
     >
       <motion.header
-        className="w-full text-center"
+        className="w-full text-center mb-6"
         initial={{ opacity: 0, y: -10 }}
         animate={{ opacity: 1, y: 0, transition: { duration: 0.5 } }}
       >
-        <h2 className="font-bold text-white text-3xl leading-9 font-['Roboto',Helvetica]">
+        <h2 className="font-bold text-white text-3xl leading-9">
           Healthy Recipes
         </h2>
       </motion.header>
 
       {loading ? (
-        <div className="text-white text-lg w-full text-center">Loading...</div>
+        <div className="text-white text-lg">Loading…</div>
+      ) : error ? (
+        <div className="text-red-400 text-lg">{error}</div>
+      ) : recipes.length === 0 ? (
+        <div className="text-white text-lg">No recipes found.</div>
       ) : (
-        <div className="flex flex-wrap items-stretch justify-center gap-6 w-full max-w-[1200px] mx-auto">
-          {recipes.map((recipe, idx) => (
+        <div className="flex flex-wrap justify-center gap-6 w-full max-w-[1200px] mx-auto">
+          {recipes.map((r) => (
             <motion.div
-              key={recipe._id || idx}
+              key={r._id}
               className="flex-1 max-w-xs"
               variants={cardVariants}
-              whileHover={{ scale: 1.03, transition: { duration: 0.3 } }}
+              whileHover={{ scale: 1.03 }}
             >
               <Card className="bg-[#131922] rounded-lg overflow-hidden shadow-lg border-none">
-                {/* If you have images in your DB, use recipe.image here */}
-                <CardContent className="flex flex-col gap-2 p-4">
-                  <motion.h3
-                    className="font-bold text-red-500 text-xl leading-7"
-                    initial={{ x: -20, opacity: 0 }}
-                    animate={{ x: 0, opacity: 1, transition: { delay: 0.3 } }}
-                  >
-                    {recipe.title}
-                  </motion.h3>
-                  <motion.p
-                    className="text-white text-base leading-6"
-                    initial={{ x: 20, opacity: 0 }}
-                    animate={{ x: 0, opacity: 1, transition: { delay: 0.4 } }}
-                  >
-                    {recipe.description}
-                  </motion.p>
-                  <motion.p
-                    className="font-bold text-red-500 text-base leading-6"
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1, transition: { delay: 0.5 } }}
-                  >
-                    Calories: {recipe.calories}
-                  </motion.p>
+                <CardContent className="p-4 flex flex-col gap-2">
+                  {r.imageUrl && (
+                    <img
+                      src={r.imageUrl}
+                      alt={r.title}
+                      className="w-full h-40 object-cover rounded"
+                    />
+                  )}
+                  <h3 className="text-red-500 font-bold text-xl">{r.title}</h3>
+                  <p className="text-white">{r.description}</p>
+                  <p className="text-red-500 font-bold">
+                    Calories: {r.calories}
+                  </p>
                 </CardContent>
               </Card>
             </motion.div>

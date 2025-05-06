@@ -1,17 +1,16 @@
 import React, { useEffect, useState } from "react";
 import { Card, CardContent } from "./ui/card";
-import { motion } from "framer-motion";
+import { motion, Variants } from "framer-motion";
 
-// Animation variants
-const sectionVariants = {
+// Framer Motion variants
+const sectionVariants: Variants = {
   hidden: { opacity: 0 },
   visible: {
     opacity: 1,
     transition: { when: "beforeChildren", staggerChildren: 0.2, duration: 0.2 },
   },
 };
-
-const cardVariants = {
+const cardVariants: Variants = {
   hidden: { opacity: 0, y: 30 },
   visible: {
     opacity: 1,
@@ -20,18 +19,40 @@ const cardVariants = {
   },
 };
 
+interface NutritionTip {
+  _id: string;
+  title: string;
+  description: string;
+  link?: string;
+  imageUrl?: string;
+}
+
 export const Diet2: React.FC = (): JSX.Element => {
-  const [nutritionTips, setNutritionTips] = useState<any[]>([]);
+  const [tips, setTips] = useState<NutritionTip[]>([]);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    fetch("http://localhost:5000/api/nutrition-tips")
-      .then((res) => res.json())
-      .then((data) => {
-        setNutritionTips(data);
+    const fetchTips = async () => {
+      setLoading(true);
+      setError(null);
+      try {
+        const res = await fetch("http://localhost:5000/api/nutrition-tips");
+        if (!res.ok) {
+          const err = await res.json();
+          throw new Error(err.message || "Failed to load nutrition tips");
+        }
+        const data: NutritionTip[] = await res.json();
+        console.log("Fetched nutrition tips:", data);
+        setTips(data);
+      } catch (err: any) {
+        console.error("Error fetching nutrition tips:", err);
+        setError(err.message);
+      } finally {
         setLoading(false);
-      })
-      .catch(() => setLoading(false));
+      }
+    };
+    fetchTips();
   }, []);
 
   return (
@@ -40,30 +61,41 @@ export const Diet2: React.FC = (): JSX.Element => {
       variants={sectionVariants}
       initial="hidden"
       animate="visible"
-      viewport={{ once: true }}
     >
       <motion.header className="w-full text-center" variants={cardVariants}>
-        <h2 className="font-bold text-white text-3xl leading-9 font-['Roboto',Helvetica]">
+        <h2 className="font-bold text-white text-3xl leading-9">
           Nutrition Tips
         </h2>
       </motion.header>
 
       {loading ? (
         <div className="text-white text-lg w-full text-center">Loading...</div>
+      ) : error ? (
+        <div className="text-red-400 text-lg w-full text-center">{error}</div>
+      ) : tips.length === 0 ? (
+        <div className="text-white text-lg w-full text-center">
+          No tips available.
+        </div>
       ) : (
-        <motion.div
+        <div
           className="flex flex-wrap items-stretch justify-center gap-6 w-full max-w-[1200px] mx-auto"
           variants={sectionVariants}
         >
-          {nutritionTips.map((tip, index) => (
+          {tips.map((tip) => (
             <motion.div
-              key={tip._id || index}
+              key={tip._id}
               className="flex-1 max-w-xs"
               variants={cardVariants}
-              whileHover={{ scale: 1.03 }}
+              whileHover={{ scale: 1.03, transition: { duration: 0.3 } }}
             >
               <Card className="bg-[#131922] rounded-lg overflow-hidden shadow-lg border-none">
-                {/* If you have images in your DB, use tip.image here */}
+                {tip.imageUrl && (
+                  <img
+                    src={tip.imageUrl}
+                    alt={tip.title}
+                    className="w-full h-40 object-cover rounded-t-lg"
+                  />
+                )}
                 <CardContent className="flex flex-col gap-2 p-4">
                   <motion.h3
                     className="font-bold text-red-500 text-xl leading-7"
@@ -84,7 +116,7 @@ export const Diet2: React.FC = (): JSX.Element => {
                       href={tip.link}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="text-red-500 text-base leading-6 underline"
+                      className="mt-2 text-red-500 text-base leading-6 underline"
                       initial={{ opacity: 0 }}
                       animate={{ opacity: 1, transition: { delay: 0.5 } }}
                     >
@@ -95,7 +127,7 @@ export const Diet2: React.FC = (): JSX.Element => {
               </Card>
             </motion.div>
           ))}
-        </motion.div>
+        </div>
       )}
     </motion.section>
   );
