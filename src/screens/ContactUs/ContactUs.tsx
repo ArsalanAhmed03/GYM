@@ -1,3 +1,5 @@
+// src/components/ContactUs.tsx
+
 import React, { useState } from "react";
 import { MailIcon, PhoneIcon } from "lucide-react";
 import { motion } from "framer-motion";
@@ -25,38 +27,36 @@ export const ContactUs: React.FC = (): JSX.Element => {
     e.preventDefault();
     setFeedback(null);
 
-    if (!name || !email || !message) {
+    if (!name.trim() || !email.trim() || !message.trim()) {
       setFeedback({ type: "error", text: "Please fill out all fields." });
       return;
     }
 
     setLoading(true);
-    console.log("Submitting contact form:", { name, email, message });
 
     try {
       const res = await fetch("http://localhost:5000/api/contact-messages", {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ name, email, message }),
       });
 
-      console.log("Response status:", res.status);
-      const body = await res.json();
-      console.log("Response body:", body);
+      const { message: respMsg } = await res.json();
 
-      if (!res.ok) {
-        throw new Error(body.message || "Failed to send message");
+      if (res.ok) {
+        // 2xx → success
+        setFeedback({ type: "success", text: respMsg });
+        // CLEAR form
+        setName("");
+        setEmail("");
+        setMessage("");
+      } else {
+        // non-2xx → show error from server
+        setFeedback({ type: "error", text: respMsg || "Failed to send message." });
       }
-
-      setFeedback({ type: "success", text: body.message || "Message sent!" });
-      setName("");
-      setEmail("");
-      setMessage("");
     } catch (err: any) {
-      console.error("Error posting contact:", err);
-      setFeedback({ type: "error", text: err.message });
+      // network or parsing error
+      setFeedback({ type: "error", text: err.message || "Network error." });
     } finally {
       setLoading(false);
     }
@@ -91,6 +91,7 @@ export const ContactUs: React.FC = (): JSX.Element => {
               className="w-full bg-gray-700 text-[#b2b2b2] rounded p-4 border-0"
             />
           </motion.div>
+
           <motion.div variants={fadeIn}>
             <Input
               placeholder="Your Email"
@@ -100,6 +101,7 @@ export const ContactUs: React.FC = (): JSX.Element => {
               className="w-full bg-gray-700 text-[#b2b2b2] rounded p-4 border-0"
             />
           </motion.div>
+
           <motion.div variants={fadeIn}>
             <Textarea
               placeholder="Your Message"
@@ -110,16 +112,17 @@ export const ContactUs: React.FC = (): JSX.Element => {
           </motion.div>
 
           {feedback && (
-            <motion.div variants={fadeIn} className="text-center">
-              <p
-                className={
-                  feedback.type === "success"
-                    ? "text-green-400"
-                    : "text-red-400"
-                }
-              >
-                {feedback.text}
-              </p>
+            <motion.div
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.3 }}
+              className={`text-center p-3 rounded-lg ${
+                feedback.type === "success"
+                  ? "bg-green-900/50 text-green-400"
+                  : "bg-red-900/50 text-red-400"
+              }`}
+            >
+              <p>{feedback.text}</p>
             </motion.div>
           )}
 
@@ -153,12 +156,8 @@ export const ContactUs: React.FC = (): JSX.Element => {
           <motion.div variants={fadeIn} className="flex-1">
             <Card className="bg-[#131922] p-6 rounded-lg border-none">
               <CardContent>
-                <h3 className="text-gray-300 text-xl font-bold mb-2">
-                  Our Address
-                </h3>
-                <p className="text-gray-300">
-                  123 Fitness St, Healthy City, HC 12345
-                </p>
+                <h3 className="text-gray-300 text-xl font-bold mb-2">Our Address</h3>
+                <p className="text-gray-300">123 Fitness St, Healthy City, HC 12345</p>
               </CardContent>
             </Card>
           </motion.div>
@@ -168,11 +167,7 @@ export const ContactUs: React.FC = (): JSX.Element => {
               alt="Map location"
               className="w-full h-64 object-cover rounded-lg"
               initial={{ scale: 1.1, opacity: 0 }}
-              animate={{
-                scale: 1,
-                opacity: 1,
-                transition: { duration: 0.6, ease: "easeOut" },
-              }}
+              animate={{ scale: 1, opacity: 1, transition: { duration: 0.6, ease: "easeOut" } }}
             />
           </motion.div>
         </div>
@@ -186,10 +181,7 @@ export const ContactUs: React.FC = (): JSX.Element => {
         viewport={{ once: true, amount: 0.2 }}
         variants={fadeIn}
       >
-        <motion.h2
-          className="text-white text-2xl font-bold mb-4"
-          variants={fadeIn}
-        >
+        <motion.h2 className="text-white text-2xl font-bold mb-4" variants={fadeIn}>
           Customer Support
         </motion.h2>
         <motion.p className="text-white mb-6" variants={fadeIn}>
