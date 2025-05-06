@@ -46,7 +46,7 @@ export const GymEquipment = (): JSX.Element => {
           {facilityHighlights.map((facility, index) => (
             <Card
               key={index}
-              className="flex flex-col w-[405px] items-start gap-[5px] p-6 bg-[#181e28] rounded-lg overflow-hidden shadow-[0px_10px_15px_-3px_#0000001a,0px_4px_6px_-4px_#0000001a] border-0"
+              className="flex flex-col w-[405px] items-start gap-[5px] p-6 bg-[#131922] rounded-lg overflow-hidden shadow-[0px_10px_15px_-3px_#0000001a,0px_4px_6px_-4px_#0000001a] border-0"
             >
               <CardContent className="p-0 w-full">
                 <img

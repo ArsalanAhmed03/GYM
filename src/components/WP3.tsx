@@ -1,4 +1,3 @@
-import React from "react";
 import { Card, CardContent } from "./ui/card";
 
 export const WP3 = (): JSX.Element => {
@@ -36,7 +35,7 @@ export const WP3 = (): JSX.Element => {
         {trainers.map((trainer) => (
           <Card
             key={trainer.id}
-            className="flex flex-col w-full sm:w-[405px] items-center gap-2 p-6 bg-[#181e28] rounded-lg overflow-hidden shadow-[0px_10px_15px_-3px_#0000001a,0px_4px_6px_-4px_#0000001a] border-0"
+            className="flex flex-col w-full sm:w-[405px] items-center gap-2 p-6 bg-[#131922] rounded-lg overflow-hidden shadow-[0px_10px_15px_-3px_#0000001a,0px_4px_6px_-4px_#0000001a] border-0"
           >
             <CardContent className="flex flex-col items-center p-0 pt-0">
               <img
