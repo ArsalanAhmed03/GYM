@@ -7,6 +7,7 @@ export interface IUser extends Document {
   password: string;
   isAdmin: boolean;
   purchaseHistory: mongoose.Types.ObjectId[];
+  currentPlan: mongoose.Types.ObjectId | null;
   comparePassword(candidatePassword: string): Promise<boolean>;
 }
 
@@ -15,7 +16,8 @@ const UserSchema = new Schema({
   email: { type: String, required: true, unique: true },
   password: { type: String, required: true },
   isAdmin: { type: Boolean, default: false },
-  purchaseHistory: [{ type: Schema.Types.ObjectId, ref: 'Purchase' }]
+  purchaseHistory: [{ type: Schema.Types.ObjectId, ref: 'Purchase' }],
+  currentPlan: { type: Schema.Types.ObjectId, ref: 'PricingPlan', default: null }
 }, { timestamps: true });
 
 // Hash password before saving

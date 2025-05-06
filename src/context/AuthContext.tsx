@@ -1,10 +1,21 @@
 import React, { createContext, useContext, useState, useEffect } from "react";
 
+interface User {
+  _id: string;
+  username: string;
+  email: string;
+  isAdmin: boolean;
+  currentPlan: string | null;
+}
+
 interface AuthContextType {
-  token: string | null;
-  user: any | null;
-  login: (token: string, user: any) => void;
+  user: User | null;
+  isAuthenticated: boolean;
+  isLoading: boolean;
+  login: (email: string, password: string) => Promise<void>;
   logout: () => void;
+  error: string | null;
+  token: string | null;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -12,50 +23,89 @@ const AuthContext = createContext<AuthContextType | undefined>(undefined);
 export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
   children,
 }) => {
-  const [token, setToken] = useState<string | null>(
-    localStorage.getItem("token")
-  );
-  const [user, setUser] = useState<any | null>(null);
+  const [user, setUser] = useState<User | null>(null);
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+  const [token, setToken] = useState<string | null>(null);
 
   useEffect(() => {
-    if (token) {
-      // Fetch user data when token exists
-      const fetchUser = async () => {
-        try {
+    // Check if user is logged in on mount
+    const checkAuth = async () => {
+      try {
+        const storedToken = localStorage.getItem("token");
+        if (storedToken) {
+          setToken(storedToken);
           const response = await fetch("http://localhost:5000/api/auth/me", {
             headers: {
-              Authorization: `Bearer ${token}`,
+              Authorization: `Bearer ${storedToken}`,
             },
           });
+
           if (response.ok) {
             const userData = await response.json();
             setUser(userData);
           } else {
-            logout();
+            localStorage.removeItem("token");
+            setUser(null);
+            setToken(null);
           }
-        } catch (error) {
-          console.error("Error fetching user:", error);
-          logout();
+        } else {
+          setToken(null);
         }
-      };
-      fetchUser();
-    }
-  }, [token]);
+      } catch (err) {
+        console.error("Auth check failed:", err);
+      } finally {
+        setIsLoading(false);
+      }
+    };
 
-  const login = (newToken: string, userData: any) => {
-    localStorage.setItem("token", newToken);
-    setToken(newToken);
-    setUser(userData);
+    checkAuth();
+  }, []);
+
+  const login = async (email: string, password: string) => {
+    try {
+      setError(null);
+      const response = await fetch("http://localhost:5000/api/auth/login", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ email, password }),
+      });
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(data.message || "Login failed");
+      }
+
+      localStorage.setItem("token", data.token);
+      setToken(data.token);
+      setUser(data.user);
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "Login failed");
+      throw err;
+    }
   };
 
   const logout = () => {
     localStorage.removeItem("token");
-    setToken(null);
     setUser(null);
+    setToken(null);
   };
 
   return (
-    <AuthContext.Provider value={{ token, user, login, logout }}>
+    <AuthContext.Provider
+      value={{
+        user,
+        isAuthenticated: !!user,
+        isLoading,
+        login,
+        logout,
+        error,
+        token,
+      }}
+    >
       {children}
     </AuthContext.Provider>
   );

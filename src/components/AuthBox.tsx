@@ -7,10 +7,12 @@ import { Label } from "./ui/label";
 import { Separator } from "./ui/separator";
 import { motion } from "framer-motion";
 import { useNavigate, useLocation } from "react-router-dom";
+import { useAuth } from "../context/AuthContext";
 
 export const AuthBox: React.FC = () => {
   const navigate = useNavigate();
   const location = useLocation();
+  const { login, error: authError } = useAuth();
   const [isLogin, setIsLogin] = useState(true);
   const [formData, setFormData] = useState({
     name: "",
@@ -45,34 +47,41 @@ export const AuthBox: React.FC = () => {
     setLoading(true);
 
     try {
-      const endpoint = isLogin
-        ? "http://localhost:5000/api/auth/login"
-        : "http://localhost:5000/api/auth/register";
-      const response = await fetch(endpoint, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          username: formData.name,
-          email: formData.email,
-          password: formData.password,
-        }),
-      });
+      if (isLogin) {
+        await login(formData.email, formData.password);
+        // Check if there's a selected plan to redirect to
+        const selectedPlanId = localStorage.getItem("selectedPlanId");
+        if (selectedPlanId) {
+          localStorage.removeItem("selectedPlanId");
+          navigate("/price-range", { replace: true });
+        } else {
+          navigate("/", { replace: true });
+        }
+      } else {
+        const response = await fetch(
+          "http://localhost:5000/api/auth/register",
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              username: formData.name,
+              email: formData.email,
+              password: formData.password,
+            }),
+          }
+        );
 
-      if (!response.ok) {
-        const errorData = await response.json();
-        throw new Error(errorData.message || "Authentication failed");
+        if (!response.ok) {
+          const errorData = await response.json();
+          throw new Error(errorData.message || "Registration failed");
+        }
+
+        // After successful registration, log the user in
+        await login(formData.email, formData.password);
+        navigate("/", { replace: true });
       }
-
-      const data = await response.json();
-
-      // Store the token and user data
-      localStorage.setItem("token", data.token);
-      localStorage.setItem("user", JSON.stringify(data.user));
-
-      // Redirect to home page
-      navigate("/");
     } catch (err) {
       setError(
         err instanceof Error
@@ -103,8 +112,10 @@ export const AuthBox: React.FC = () => {
                   Enter your credentials to access your account
                 </p>
               </div>
-              {error && (
-                <div className="text-red-500 text-sm text-center">{error}</div>
+              {(error || authError) && (
+                <div className="text-red-500 text-sm text-center">
+                  {error || authError}
+                </div>
               )}
               <form onSubmit={handleSubmit} className="space-y-4">
                 <div className="space-y-2">
@@ -179,8 +190,10 @@ export const AuthBox: React.FC = () => {
                   Fill in the details to sign up
                 </p>
               </div>
-              {error && (
-                <div className="text-red-500 text-sm text-center">{error}</div>
+              {(error || authError) && (
+                <div className="text-red-500 text-sm text-center">
+                  {error || authError}
+                </div>
               )}
               <form onSubmit={handleSubmit} className="space-y-4">
                 <div className="space-y-2">

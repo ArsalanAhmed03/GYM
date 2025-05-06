@@ -7,6 +7,12 @@ import authRoutes from './routes/authRoutes';
 import productRoutes from './routes/productRoutes';
 import cartRoutes from './routes/cartRoutes';
 import purchaseRoutes from './routes/purchaseRoutes';
+import trainerRoutes from './routes/trainerRoutes';
+import pricingPlanRoutes from './routes/pricingPlanRoutes';
+import nutritionTipsRoutes from './routes/nutritionTips';
+import healthyRecipesRoutes from './routes/healthyRecipes';
+import emailSubscriptionsRoutes from './routes/emailSubscriptions';
+import contactMessagesRoutes from './routes/contactMessages';
 
 // Load environment variables
 dotenv.config();
@@ -26,6 +32,12 @@ app.use('/api/auth', authRoutes);
 app.use('/api/products', productRoutes);
 app.use('/api/cart', cartRoutes);
 app.use('/api/purchase', purchaseRoutes);
+app.use('/api/trainers', trainerRoutes);
+app.use('/api/pricing-plans', pricingPlanRoutes);
+app.use('/api/nutrition-tips', nutritionTipsRoutes);
+app.use('/api/healthy-recipes', healthyRecipesRoutes);
+app.use('/api/email-subscriptions', emailSubscriptionsRoutes);
+app.use('/api/contact-messages', contactMessagesRoutes);
 
 // Error handling middleware
 app.use((err: any, req: express.Request, res: express.Response, next: express.NextFunction) => {

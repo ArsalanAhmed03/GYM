@@ -54,7 +54,10 @@
   "jsonwebtoken": "^9.0.2",
   
     
-  "mongoose": "^8.1.0"
+  "mongoose": "^8.1.0",
+  
+    
+  "nodemailer": "^7.0.2"
   
   },
   
@@ -79,7 +82,7 @@
   "@types/mongoose": "^5.11.96",
   
     
-  "@types/node": "^22.14.1",
+  "@types/node": "^22.15.8",
   
     
   "nodemon": "^3.1.10",
