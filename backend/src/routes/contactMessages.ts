@@ -1,19 +1,10 @@
-import express, {
-  Request,
-  Response,
-  NextFunction,
-  RequestHandler
-} from 'express';
+import express from 'express';
 import ContactMessage from '../models/ContactMessage';
 import nodemailer from 'nodemailer';
 
 const router = express.Router();
 
-const contactFormHandler: RequestHandler = async (
-  req,
-  res,
-  next
-): Promise<void> => {
+router.post('/', async (req: express.Request, res: express.Response): Promise<any> =>{
   const { name, email, message } = req.body as {
     name: string;
     email: string;
@@ -21,13 +12,14 @@ const contactFormHandler: RequestHandler = async (
   };
 
   if (!name || !email || !message) {
-    res.status(400).json({ message: 'All fields are required.' });
-    return;                  // ← just return void here
+    return res.status(400).json({ message: 'All fields are required.' });
   }
 
   try {
-    await ContactMessage.create({ name, email, message });
+    // Store in DB
+    const newMsg = await ContactMessage.create({ name, email, message });
 
+    // Send email to admin
     const transporter = nodemailer.createTransport({
       host: process.env.SMTP_HOST,
       port: Number(process.env.SMTP_PORT),
@@ -43,20 +35,14 @@ const contactFormHandler: RequestHandler = async (
       to: process.env.ADMIN_EMAIL,
       subject: 'New Contact Us Message',
       text: `Name: ${name}\nEmail: ${email}\nMessage: ${message}`,
-      html: `<p><b>Name:</b> ${name}</p>
-             <p><b>Email:</b> ${email}</p>
-             <p><b>Message:</b> ${message}</p>`
+      html: `<p><b>Name:</b> ${name}</p><p><b>Email:</b> ${email}</p><p><b>Message:</b> ${message}</p>`
     });
 
-    res.status(201).json({ message: 'Message sent successfully.' });
-    return;                  // ← again, just return void
+    return res.status(201).json({ message: 'Message sent successfully.' });
   } catch (err) {
     console.error(err);
-    next(err);               // pass to Express’s error handler
-    return;
+    return res.status(500).json({ message: 'Failed to send message.' });
   }
-};
-
-router.post('/', contactFormHandler);
+});
 
 export default router;
