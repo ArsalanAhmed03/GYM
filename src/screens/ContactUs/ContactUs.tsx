@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { MailIcon, PhoneIcon } from "lucide-react";
 import { motion } from "framer-motion";
 import { Button } from "../../components/ui/button";
@@ -6,19 +6,68 @@ import { Card, CardContent } from "../../components/ui/card";
 import { Input } from "../../components/ui/input";
 import { Textarea } from "../../components/ui/textarea";
 
-// Simple fade & slide animations
 const fadeIn = {
   hidden: { opacity: 0, y: 20 },
-  visible: { opacity: 1, y: 0, transition: { duration: 0.5, ease: 'easeOut' } }
+  visible: { opacity: 1, y: 0, transition: { duration: 0.5, ease: "easeOut" } },
 };
 
 export const ContactUs: React.FC = (): JSX.Element => {
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [message, setMessage] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [feedback, setFeedback] = useState<{
+    type: "success" | "error";
+    text: string;
+  } | null>(null);
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setFeedback(null);
+
+    if (!name || !email || !message) {
+      setFeedback({ type: "error", text: "Please fill out all fields." });
+      return;
+    }
+
+    setLoading(true);
+    console.log("Submitting contact form:", { name, email, message });
+
+    try {
+      const res = await fetch("http://localhost:5000/api/contact-messages", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ name, email, message }),
+      });
+
+      console.log("Response status:", res.status);
+      const body = await res.json();
+      console.log("Response body:", body);
+
+      if (!res.ok) {
+        throw new Error(body.message || "Failed to send message");
+      }
+
+      setFeedback({ type: "success", text: body.message || "Message sent!" });
+      setName("");
+      setEmail("");
+      setMessage("");
+    } catch (err: any) {
+      console.error("Error posting contact:", err);
+      setFeedback({ type: "error", text: err.message });
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return (
     <div
       className="flex flex-col min-h-screen items-center justify-center gap-8 px-4 md:px-20 py-10 bg-cover bg-center"
-      style={{ backgroundImage: "url('../bg1.png')" }}
+      style={{ backgroundImage: "url('/bg1.png')" }}
     >
-      {/* Contact Form Section */}
+      {/* Contact Form */}
       <motion.section
         className="w-full max-w-3xl bg-[#0f131ba6] rounded-lg p-8"
         initial="hidden"
@@ -33,25 +82,60 @@ export const ContactUs: React.FC = (): JSX.Element => {
           Contact Us
         </motion.h1>
 
-        <motion.div className="space-y-4" variants={fadeIn}>
+        <form onSubmit={handleSubmit} className="space-y-4">
           <motion.div variants={fadeIn}>
-            <Input placeholder="Your Name" className="w-full bg-gray-700 text-[#b2b2b2] rounded p-4 border-0" />
+            <Input
+              placeholder="Your Name"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+              className="w-full bg-gray-700 text-[#b2b2b2] rounded p-4 border-0"
+            />
           </motion.div>
           <motion.div variants={fadeIn}>
-            <Input placeholder="Your Email" type="email" className="w-full bg-gray-700 text-[#b2b2b2] rounded p-4 border-0" />
+            <Input
+              placeholder="Your Email"
+              type="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              className="w-full bg-gray-700 text-[#b2b2b2] rounded p-4 border-0"
+            />
           </motion.div>
           <motion.div variants={fadeIn}>
-            <Textarea placeholder="Your Message" className="w-full bg-gray-700 text-[#b2b2b2] rounded p-4 min-h-[100px] border-0" />
+            <Textarea
+              placeholder="Your Message"
+              value={message}
+              onChange={(e) => setMessage(e.target.value)}
+              className="w-full bg-gray-700 text-[#b2b2b2] rounded p-4 min-h-[100px] border-0"
+            />
           </motion.div>
+
+          {feedback && (
+            <motion.div variants={fadeIn} className="text-center">
+              <p
+                className={
+                  feedback.type === "success"
+                    ? "text-green-400"
+                    : "text-red-400"
+                }
+              >
+                {feedback.text}
+              </p>
+            </motion.div>
+          )}
+
           <motion.div variants={fadeIn} className="text-center">
-            <Button className="w-full bg-[#ff4b2b] hover:bg-[#ff3b1b] text-white py-3 rounded">
-              Send Message
+            <Button
+              type="submit"
+              disabled={loading}
+              className="w-full bg-[#ff4b2b] hover:bg-[#ff3b1b] text-white py-3 rounded disabled:opacity-50"
+            >
+              {loading ? "Sending…" : "Send Message"}
             </Button>
           </motion.div>
-        </motion.div>
+        </form>
       </motion.section>
 
-      {/* Location & Map Section */}
+      {/* Location & Map (static) */}
       <motion.section
         className="w-full max-w-5xl bg-[#00000080] rounded-lg p-8"
         initial="hidden"
@@ -59,15 +143,22 @@ export const ContactUs: React.FC = (): JSX.Element => {
         viewport={{ once: true, amount: 0.2 }}
         variants={fadeIn}
       >
-        <motion.h2 className="text-gray-300 text-3xl font-bold text-center mb-6" variants={fadeIn}>
+        <motion.h2
+          className="text-gray-300 text-3xl font-bold text-center mb-6"
+          variants={fadeIn}
+        >
           Location & Map
         </motion.h2>
         <div className="flex flex-col md:flex-row gap-8">
           <motion.div variants={fadeIn} className="flex-1">
             <Card className="bg-[#131922] p-6 rounded-lg border-none">
               <CardContent>
-                <h3 className="text-gray-300 text-xl font-bold mb-2">Our Address</h3>
-                <p className="text-gray-300">123 Fitness St, Healthy City, HC 12345</p>
+                <h3 className="text-gray-300 text-xl font-bold mb-2">
+                  Our Address
+                </h3>
+                <p className="text-gray-300">
+                  123 Fitness St, Healthy City, HC 12345
+                </p>
               </CardContent>
             </Card>
           </motion.div>
@@ -77,13 +168,17 @@ export const ContactUs: React.FC = (): JSX.Element => {
               alt="Map location"
               className="w-full h-64 object-cover rounded-lg"
               initial={{ scale: 1.1, opacity: 0 }}
-              animate={{ scale: 1, opacity: 1, transition: { duration: 0.6, ease: 'easeOut' } }}
+              animate={{
+                scale: 1,
+                opacity: 1,
+                transition: { duration: 0.6, ease: "easeOut" },
+              }}
             />
           </motion.div>
         </div>
       </motion.section>
 
-      {/* Customer Support Section */}
+      {/* Customer Support (static) */}
       <motion.section
         className="w-full max-w-3xl bg-[#00000080] rounded-lg p-8"
         initial="hidden"
@@ -91,7 +186,10 @@ export const ContactUs: React.FC = (): JSX.Element => {
         viewport={{ once: true, amount: 0.2 }}
         variants={fadeIn}
       >
-        <motion.h2 className="text-white text-2xl font-bold mb-4" variants={fadeIn}>
+        <motion.h2
+          className="text-white text-2xl font-bold mb-4"
+          variants={fadeIn}
+        >
           Customer Support
         </motion.h2>
         <motion.p className="text-white mb-6" variants={fadeIn}>
