@@ -1,23 +1,26 @@
 import { Request, Response, NextFunction } from 'express';
 import Event, { IEvent } from '../models/Event';
 
+// Get all events
 export const getEvents = async (req: Request, res: Response<IEvent[] | { message: string }>, next: NextFunction) => {
   try {
-    const events = await Event.find({});
-    return res.status(200).json(events);
+    const events = await Event.find({}); // Fetch events from the DB
+    return res.status(200).json(events); // Return the events as a JSON response
   } catch (error) {
     console.error('Error fetching events:', error);
-    return res.status(500).json({ message: 'Server error fetching events.' });
+    return next(error); // Use next() to handle the error
   }
 };
 
-export const createEvent = async (req: Request, res: Response<IEvent | { message: string; error?: any }>) => {
+// Create a new event
+export const createEvent = async (req: Request, res: Response<IEvent | { message: string; error?: any }>, next: NextFunction) => {
   try {
-    const event = new Event(req.body);
-    await event.save();
-    return res.status(201).json(event);
+    const { name, date, description } = req.body; // Extract data from the request body
+    const event = new Event({ name, date, description }); // Create the event
+    await event.save(); // Save the event to the database
+    return res.status(201).json(event); // Return the newly created event
   } catch (error) {
     console.error('Error creating event:', error);
-    return res.status(400).json({ message: 'Error creating event', error });
+    return next(error); // Use next() to handle the error
   }
 };
