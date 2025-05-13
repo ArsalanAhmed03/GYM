@@ -14,7 +14,7 @@ import healthyRecipesRoutes from './routes/healthyRecipes';
 import emailSubscriptionsRoutes from './routes/emailSubscriptions';
 import contactMessagesRoutes from './routes/contactMessages';
 import eventRoutes from './routes/eventRoutes';
-
+import aboutUsRoutes from './routes/aboutUsRoutes';
 // Load environment variables
 dotenv.config();
 
@@ -40,6 +40,7 @@ app.use('/api/healthy-recipes', healthyRecipesRoutes);
 app.use('/api/email-subscriptions', emailSubscriptionsRoutes);
 app.use('/api/contact-messages', contactMessagesRoutes);
 app.use('/api/events', eventRoutes);
+app.use('/api/about-us', aboutUsRoutes);
 
 // Error handling middleware
 app.use((err: any, req: express.Request, res: express.Response, next: express.NextFunction) => {
