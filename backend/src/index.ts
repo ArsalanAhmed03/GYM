@@ -50,5 +50,8 @@ app.use((err: any, req: express.Request, res: express.Response, next: express.Ne
 
 // Start server
 app.listen(PORT, () => {
-  console.log(`Server running on http://localhost:${PORT}`);
+  console.log(`Server running in ${process.env.NODE_ENV || 'development'} mode`);
+  console.log(`Access URLs:
+  Local: http://localhost:${PORT}
+  Render: https://gym-backend-ujzl.onrender.com`);
 });
