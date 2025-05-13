@@ -1,4 +1,4 @@
-const API_URL = 'http://localhost:5000/api';
+const API_URL = 'https://gym-backend-ujzl.onrender.com';
 
 export interface AuthResponse {
   token: string;

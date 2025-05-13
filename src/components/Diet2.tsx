@@ -37,7 +37,7 @@ export const Diet2: React.FC = (): JSX.Element => {
       setLoading(true);
       setError(null);
       try {
-        const res = await fetch("http://localhost:5000/api/nutrition-tips");
+        const res = await fetch("https://gym-backend-ujzl.onrender.com");
         if (!res.ok) {
           const err = await res.json();
           throw new Error(err.message || "Failed to load nutrition tips");

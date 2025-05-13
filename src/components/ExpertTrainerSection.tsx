@@ -17,7 +17,7 @@ export const ExpertTrainer: React.FC = (): JSX.Element => {
   useEffect(() => {
     const fetchTrainers = async () => {
       try {
-        const response = await fetch("http://localhost:5000/api/trainers");
+        const response = await fetch("https://gym-backend-ujzl.onrender.com");
         if (!response.ok) {
           throw new Error("Failed to fetch trainers");
         }

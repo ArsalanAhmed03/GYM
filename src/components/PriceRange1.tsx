@@ -27,7 +27,7 @@ export const PriceRange1 = (): JSX.Element => {
   useEffect(() => {
     const fetchPlans = async () => {
       try {
-        const response = await fetch("http://localhost:5000/api/pricing-plans");
+        const response = await fetch("https://gym-backend-ujzl.onrender.com");
         if (!response.ok) {
           throw new Error("Failed to fetch pricing plans");
         }
@@ -53,7 +53,7 @@ export const PriceRange1 = (): JSX.Element => {
 
     try {
       const response = await fetch(
-        "http://localhost:5000/api/pricing-plans/update-user-plan",
+        "https://gym-backend-ujzl.onrender.com",
         {
           method: "POST",
           headers: {

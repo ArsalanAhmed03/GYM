@@ -54,7 +54,7 @@ export const SignUpSection = () => {
     }
 
     try {
-      const response = await fetch("http://localhost:5000/api/auth/register", {
+      const response = await fetch("https://gym-backend-ujzl.onrender.com", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
