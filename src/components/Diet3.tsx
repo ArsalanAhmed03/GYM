@@ -45,7 +45,9 @@ export const Diet3: React.FC = () => {
       setError(null);
 
       try {
-        const res = await fetch("https://gym-backend-ujzl.onrender.com");
+        const res = await fetch(
+          "https://gym-backend-ujzl.onrender.com/api/healthy-recipes"
+        );
         if (!res.ok) throw new Error("Failed to fetch recipes");
         const data: HealthyRecipe[] = await res.json();
         console.log("Fetched recipes:", data);
