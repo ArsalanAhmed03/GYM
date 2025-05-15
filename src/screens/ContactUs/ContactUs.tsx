@@ -35,7 +35,7 @@ export const ContactUs: React.FC = (): JSX.Element => {
     setLoading(true);
 
     try {
-      const res = await fetch("https://gym-backend-ujzl.onrender.com", {
+      const res = await fetch("https://gym-backend-ujzl.onrender.com/api/contact-messages", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ name, email, message }),

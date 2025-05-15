@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const API_URL = 'https://gym-backend-ujzl.onrender.com/api/products';
+const API_URL = 'https://gym-backend-ujzl.onrender.com/api';
 
 export interface Product {
   _id: string;

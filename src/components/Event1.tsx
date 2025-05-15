@@ -7,7 +7,7 @@ export const Event1 = (): JSX.Element => {
   const [events, setEvents] = useState<any[]>([]);
 
   useEffect(() => {
-    fetch("https://gym-backend-ujzl.onrender.com")
+    fetch("https://gym-backend-ujzl.onrender.com/api/events")
       .then((res) => res.json())
       .then((data) => setEvents(data));
   }, []);

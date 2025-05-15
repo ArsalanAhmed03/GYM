@@ -54,17 +54,20 @@ export const SignUpSection = () => {
     }
 
     try {
-      const response = await fetch("https://gym-backend-ujzl.onrender.com", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          username: `${formData.firstName} ${formData.lastName}`,
-          email: formData.email,
-          password: formData.phone,
-        }),
-      });
+      const response = await fetch(
+        "https://gym-backend-ujzl.onrender.com/api/auth/register",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            username: `${formData.firstName} ${formData.lastName}`,
+            email: formData.email,
+            password: formData.phone,
+          }),
+        }
+      );
 
       if (!response.ok) {
         const errorData = await response.json();

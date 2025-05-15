@@ -20,7 +20,7 @@ export const Diet1: React.FC = (): JSX.Element => {
     setFeedback(null);
 
     try {
-      const res = await fetch("https://gym-backend-ujzl.onrender.com", {
+      const res = await fetch("https://gym-backend-ujzl.onrender.com/api/email-subscriptions", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email }),

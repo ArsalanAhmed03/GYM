@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { Product } from './productService';
 
-const API_URL = 'https://gym-backend-ujzl.onrender.com/';
+const API_URL = 'https://gym-backend-ujzl.onrender.com/api';
 
 export interface CartItem {
   productId: Product;

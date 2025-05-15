@@ -35,7 +35,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
         const storedToken = localStorage.getItem("token");
         if (storedToken) {
           setToken(storedToken);
-          const response = await fetch("https://gym-backend-ujzl.onrender.com", {
+          const response = await fetch("https://gym-backend-ujzl.onrender.com/api/auth/me", {
             headers: {
               Authorization: `Bearer ${storedToken}`,
             },
@@ -65,7 +65,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
   const login = async (email: string, password: string) => {
     try {
       setError(null);
-      const response = await fetch("https://gym-backend-ujzl.onrender.com", {
+      const response = await fetch("https://gym-backend-ujzl.onrender.com/api/auth/login", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

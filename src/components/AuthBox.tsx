@@ -59,7 +59,7 @@ export const AuthBox: React.FC = () => {
         }
       } else {
         const response = await fetch(
-          "https://gym-backend-ujzl.onrender.com",
+          "https://gym-backend-ujzl.onrender.com/api/auth/register",
           {
             method: "POST",
             headers: {
